@@ -4,7 +4,7 @@ class HealthPulse:
     def __init__(self):
         self.name = ""
         self.age = 0
-        self.bodyweight = 0.0
+        self.BodyWeight = 0.0
         self.height = 0.0
         self.targetWeight = 0.0
         self.dailyCalorieIntake = 0.0
@@ -48,7 +48,6 @@ class HealthPulse:
           self.register_user()
           return
   
-
       while True:
           new_password = input("Create a password: ")
           confirm_password = input("Confirm your password: ")
@@ -76,36 +75,36 @@ class HealthPulse:
         except FileNotFoundError:
             return False
 
-    def save_user_data(self):
-        try:
-            with open("user_data.txt", "w") as out_file:
-                out_file.write(f"{self.name}\n")
-                out_file.write(f"{self.age}\n")
-                out_file.write(f"{self.bodyweight}\n")
-                out_file.write(f"{self.height}\n")
-                out_file.write(f"{self.targetWeight}\n")
-                out_file.write(f"{self.dailyCalorieIntake}\n")
-                out_file.write(f"{self.dailyCaloriesBurned}\n")
-                out_file.write(f"{self.netCalorieIntake}\n")
-                out_file.write(f"{self.bmiCategory}\n")
-                out_file.write(f"{self.workedOut}\n")
+    # def save_user_data(self):
+    #     try:
+    #         with open("user_data.txt", "w") as out_file:
+    #             out_file.write(f"{self.name}\n")
+    #             out_file.write(f"{self.age}\n")
+    #             out_file.write(f"{self.bodyweight}\n")
+    #             out_file.write(f"{self.height}\n")
+    #             out_file.write(f"{self.targetWeight}\n")
+    #             out_file.write(f"{self.dailyCalorieIntake}\n")
+    #             out_file.write(f"{self.dailyCaloriesBurned}\n")
+    #             out_file.write(f"{self.netCalorieIntake}\n")
+    #             out_file.write(f"{self.bmiCategory}\n")
+    #             out_file.write(f"{self.workedOut}\n")
 
-                out_file.write(f"{len(self.dietPlan)}\n")
-                for plan in self.dietPlan:
-                    out_file.write(f"{plan}\n")
+    #             out_file.write(f"{len(self.dietPlan)}\n")
+    #             for plan in self.dietPlan:
+    #                 out_file.write(f"{plan}\n")
 
-                out_file.write(f"{len(self.workoutPlan)}\n")
-                for plan in self.workoutPlan:
-                    out_file.write(f"{plan}\n")
+    #             out_file.write(f"{len(self.workoutPlan)}\n")
+    #             for plan in self.workoutPlan:
+    #                 out_file.write(f"{plan}\n")
 
-        except IOError:
-            print("Unable to save user data to file.")
+    #     except IOError:
+    #         print("Unable to save user data to file.")
 
     def load_user_data(self):
         try:
             with open("user_data.txt", "r") as in_file:
                 self.name = in_file.readline().strip()
-                self.age, self.bodyweight, self.height, self.targetWeight, self.dailyCalorieIntake, \
+                self.age, self.BodyWeight, self.height, self.targetWeight, self.dailyCalorieIntake, \
                     self.dailyCaloriesBurned, self.netCalorieIntake = map(float, in_file.readline().split())
                 self.bmiCategory = in_file.readline().strip()
                 self.workedOut = bool(int(in_file.readline().strip()))
@@ -137,10 +136,18 @@ class HealthPulse:
     
         if choice == "1":
             self.fitness_level = "beginner"
+            print("Cheers to new beginnings!You're officially a fitness explorer. Let's start this adventure together!")
+            break
+          
         elif choice == "2":
             self.fitness_level = "intermediate"
+            print(" Your dedication is paying off, and the best is yet to come.") 
+            break
         elif choice == "3":
             self.fitness_level = "advanced"
+            print("You're an advanced fitness warrior now! Your commitment is inspiring. Get ready to take your fitness game to the next level!")
+            break
+          
         else:
             print("Invalid choice. Please choose a valid option.")
             Attempt+=1
@@ -148,10 +155,32 @@ class HealthPulse:
       if Attempt==3:
         print("You have exceeded the maximum number of attempts. Kindly choose from the given options.")
         self.choose_fitness_level()
+
+    def calculate_bmi(self):
+        # BMI formula: weight (kg) / (height (m))^2
+        print("\nLet's calculate your Body Mass Index (BMI).")
+      
+        self.height=float(input("Enter your height in meters: "))
+        self.BodyWeight=float(input("Enter your weight in kilograms: "))
+        
+        bmi = self.BodyWeight / (self.height ** 2)
+
+        if bmi < 18.5:
+            self.bmiCategory = "Underweight"
+        elif 18.5 <= bmi < 25:
+            self.bmiCategory = "Normal weight"
+        elif 25 <= bmi < 30:
+            self.bmiCategory = "Overweight"
+        else:
+            self.bmiCategory = "Obese"
+
+        print("\nBody Mass Index (BMI) Calculation:")
+        print("BMI: {:.2f}".format(bmi))
+        print("Category: {}".format(self.bmiCategory))
   
     def estimate_time_to_target_weight(self):
         calories_per_kg = 7700.0
-        weight_change_calories = abs(self.targetWeight - self.bodyweight) * calories_per_kg
+        weight_change_calories = abs(self.targetWeight - self.BodyWeight) * calories_per_kg
 
         if self.netCalorieIntake != 0:
             estimated_days = weight_change_calories / abs(self.netCalorieIntake)
@@ -162,7 +191,7 @@ class HealthPulse:
             else:
                 print("Gaining ", end="")
 
-            print(f"{abs(self.targetWeight - self.bodyweight)} kg", end="")
+            print(f"{abs(self.targetWeight - self.BodyWeight)} kg", end="")
 
             if estimated_days < 7:
                 print(" in less than a week.")
@@ -171,13 +200,11 @@ class HealthPulse:
                 print(f" in approximately {estimated_weeks} weeks.")
             print()
 
-    
-
     def provide_calorie_recommendation(self):
         calorie_deficit_threshold = 500.0
-        calorie_deficit = (self.targetWeight - self.bodyweight) * 7700.0 / 1000.0
+        calorie_deficit = (self.targetWeight - self.BodyWeight) * 7700.0 / 1000.0
 
-        if self.targetWeight < self.bodyweight:
+        if self.targetWeight < self.BodyWeight:
             # User wants to lose weight
             lower_threshold = calorie_deficit - calorie_deficit_threshold
             upper_threshold = calorie_deficit + calorie_deficit_threshold
@@ -191,7 +218,7 @@ class HealthPulse:
             else:
                 print("Your daily calorie intake is within a healthy range for your weight loss goal. "
                       "Keep up the good work!")
-        elif self.targetWeight > self.bodyweight:
+        elif self.targetWeight > self.BodyWeight:
             # User wants to gain weight
             lower_threshold = calorie_deficit - calorie_deficit_threshold
             upper_threshold = calorie_deficit + calorie_deficit_threshold
@@ -219,24 +246,6 @@ class HealthPulse:
             else:
                 print("Your daily calorie intake is within a healthy range for maintaining your current weight. "
                       "Keep up the good work!")
-
-    def calculate_bmi(self):
-        # BMI formula: weight (kg) / (height (m))^2
-        height_in_meters = self.height / 100.0
-        bmi = self.bodyweight / (height_in_meters ** 2)
-
-        if bmi < 18.5:
-            self.bmiCategory = "Underweight"
-        elif 18.5 <= bmi < 25:
-            self.bmiCategory = "Normal weight"
-        elif 25 <= bmi < 30:
-            self.bmiCategory = "Overweight"
-        else:
-            self.bmiCategory = "Obese"
-
-        print("\nBody Mass Index (BMI) Calculation:")
-        print("BMI: {:.2f}".format(bmi))
-        print("Category: {}".format(self.bmiCategory))
 
     def initialize_food_calories(self):
         # Caloric values are for 100g servings
@@ -325,38 +334,38 @@ class HealthPulse:
             print(f"Sorry, we don't have caloric information for {exercise_type}.")
             return 0.0
 
-    def display_menu(self):
-        print("\nHealthPulse Menu:")
-        print("1. Log Food Intake")
-        print("2. Log Exercise")
-        print("3. View BMI and Weight Status")
-        print("4. View Caloric Recommendation")
-        print("5. View Estimated Time to Target Weight")
-        print("6. View Diet Plan")
-        print("7. View Workout Plan")
-        print("8. Save and Exit")
+    # def display_menu(self):
+    #     print("\nHealthPulse Menu:")
+    #     print("1. Log Food Intake")
+    #     print("2. Log Exercise")
+    #     print("3. View BMI and Weight Status")
+    #     print("4. View Caloric Recommendation")
+    #     print("5. View Estimated Time to Target Weight")
+    #     print("6. View Diet Plan")
+    #     print("7. View Workout Plan")
+    #     print("8. Save and Exit")
 
-    def execute_menu_option(self, option):
-        if option == 1:
-            self.log_food_intake()
-        elif option == 2:
-            self.log_exercise()
-        elif option == 3:
-            self.calculate_bmi()
-        elif option == 4:
-            self.provide_calorie_recommendation()
-        elif option == 5:
-            self.estimate_time_to_target_weight()
-        elif option == 6:
-            self.view_diet_plan()
-        elif option == 7:
-            self.view_workout_plan()
-        elif option == 8:
-            self.save_user_data()
-            print("Data saved. Exiting HealthPulse.")
-            exit()
-        else:
-            print("Invalid option. Please choose a valid option.")
+    # def execute_menu_option(self, option):
+    #     if option == 1:
+    #         self.log_food_intake()
+    #     elif option == 2:
+    #         self.log_exercise()
+    #     elif option == 3:
+    #         self.calculate_bmi()
+    #     elif option == 4:
+    #         self.provide_calorie_recommendation()
+    #     elif option == 5:
+    #         self.estimate_time_to_target_weight()
+    #     elif option == 6:
+    #         self.view_diet_plan()
+    #     elif option == 7:
+    #         self.view_workout_plan()
+    #     elif option == 8:
+    #         self.save_user_data()
+    #         print("Data saved. Exiting HealthPulse.")
+    #         exit()
+    #     else:
+    #         print("Invalid option. Please choose a valid option.")
 
     def view_diet_plan(self):
         print("\nDiet Plan:")
@@ -367,7 +376,6 @@ class HealthPulse:
         print("\nWorkout Plan:")
         for plan in self.workoutPlan:
             print(plan)
-
 
 def main():
     health_pulse = HealthPulse()
@@ -419,10 +427,9 @@ def main():
       except ValueError:
           print("Invalid input. Please enter a number.")
 
-    health_pulse.choose_fitness_level()  
+    health_pulse.choose_fitness_level() 
+    health_pulse.calculate_bmi()
     
-
-  
     # while True:
     #     health_pulse.display_menu()
     #     try:
