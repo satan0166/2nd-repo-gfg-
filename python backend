@@ -126,7 +126,8 @@ class HealthPulse:
       self.name = input("Please enter your name: ")
 
     def choose_fitness_level(self):
-       while True:
+      Attempt=0
+      while Attempt<3:
         print("\nChoose your fitness level:")
         print("1. Beginner")
         print("2. Intermediate")
@@ -142,6 +143,11 @@ class HealthPulse:
             self.fitness_level = "advanced"
         else:
             print("Invalid choice. Please choose a valid option.")
+            Attempt+=1
+
+      if Attempt==3:
+        print("You have exceeded the maximum number of attempts. Kindly choose from the given options.")
+        self.choose_fitness_level()
   
     def estimate_time_to_target_weight(self):
         calories_per_kg = 7700.0
