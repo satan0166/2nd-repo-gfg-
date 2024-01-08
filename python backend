@@ -24,7 +24,7 @@ class HealthPulse:
     def is_username_exists(self, username):
         try:
             with open("credentials.txt", "r") as credentials_file:
-                for line in credentials_file:
+                for line in credentials_file:  
                     stored_username, _ = line.strip().split(" ", 1)
                     if stored_username == username:
                         return True
@@ -119,6 +119,30 @@ class HealthPulse:
         except FileNotFoundError:
             print("No saved user data found. Starting fresh.")
 
+    def welcome_message(self):
+      print("Welcome to HealthPulse!")
+      print("Embark on a journey to better health and well-being.")
+      print("Let's get started on your personalized health and fitness plan.")
+      self.name = input("Please enter your name: ")
+
+    def choose_fitness_level(self):
+       while True:
+        print("\nChoose your fitness level:")
+        print("1. Beginner")
+        print("2. Intermediate")
+        print("3. Advanced")
+    
+        choice = input("Enter the number corresponding to your fitness level: ")
+    
+        if choice == "1":
+            self.fitness_level = "beginner"
+        elif choice == "2":
+            self.fitness_level = "intermediate"
+        elif choice == "3":
+            self.fitness_level = "advanced"
+        else:
+            print("Invalid choice. Please choose a valid option.")
+  
     def estimate_time_to_target_weight(self):
         calories_per_kg = 7700.0
         weight_change_calories = abs(self.targetWeight - self.bodyweight) * calories_per_kg
@@ -141,11 +165,7 @@ class HealthPulse:
                 print(f" in approximately {estimated_weeks} weeks.")
             print()
 
-    def welcome_message(self):
-        print("Welcome to HealthPulse!")
-        print("Embark on a journey to better health and well-being.")
-        print("Let's get started on your personalized health and fitness plan.")
-        self.name = input("Please enter your name: ")
+    
 
     def provide_calorie_recommendation(self):
         calorie_deficit_threshold = 500.0
@@ -215,48 +235,48 @@ class HealthPulse:
     def initialize_food_calories(self):
         # Caloric values are for 100g servings
         self.foodCalories = {
-           "Apple": 52.0,
-        "Banana": 89.0,
-        "Orange": 43.0,
-        "Chicken Breast": 165.0,
-        "Salmon": 206.0,
-        "Broccoli": 55.0,
-        "Carrot": 41.0,
-        "Potato": 77.0,
-        "Brown Rice": 123.0,
-        "Quinoa": 120.0,
-        "Egg": 143.0,
-        "Milk": 42.0,
-        "Almonds": 576.0,
-        "Avocado": 160.0,
-        "Olive Oil": 884.0,
-        "Yogurt": 59.0,
-        "Cheese": 402.0,
-        "Bread": 265.0,
-        "Pasta": 131.0,
-        "Chocolate": 546.0,
-        "Ice Cream": 207.0,
-        "Soda": 41.0,
-        "Coffee": 2.0,
-        "Tea": 1.0,
-        "Water": 0.0,
-        "Spinach": 23.0,
-        "Tomato": 18.0,
-        "Cucumber": 16.0,
-        "Strawberries": 32.0,
-        "Blueberries": 57.0,
-        "Ground Beef": 250.0,
-        "Shrimp": 99.0,
-        "Sweet Potato": 86.0,
-        "Lentils": 116.0,
-        "Peanut Butter": 588.0,
-        "Honey": 304.0,
-        "Quinoa": 120.0,
-        "Greek Yogurt": 59.0,
-        "Chia Seeds": 486.0,
-        "Dark Chocolate": 546.0,
-        "Green Tea": 1.0,
-        "Coconut Water": 19.0
+          "Apple": 52.0,
+          "Banana": 89.0,
+          "Orange": 43.0,
+          "Chicken Breast": 165.0,
+          "Salmon": 206.0,
+          "Broccoli": 55.0,
+          "Carrot": 41.0,
+          "Potato": 77.0,
+          "Brown Rice": 123.0,
+          "Quinoa": 120.0,
+          "Egg": 143.0,
+          "Milk": 42.0,
+          "Almonds": 576.0,
+          "Avocado": 160.0,
+          "Olive Oil": 884.0,
+          "Yogurt": 59.0,
+          "Cheese": 402.0,
+          "Bread": 265.0,
+          "Pasta": 131.0,
+          "Chocolate": 546.0,
+          "Ice Cream": 207.0,
+          "Soda": 41.0,
+          "Coffee": 2.0,
+          "Tea": 1.0,
+          "Water": 0.0,
+          "Spinach": 23.0,
+          "Tomato": 18.0,
+          "Cucumber": 16.0,
+          "Strawberries": 32.0,
+          "Blueberries": 57.0,
+          "Ground Beef": 250.0,
+          "Shrimp": 99.0,
+          "Sweet Potato": 86.0,
+          "Lentils": 116.0,
+          "Peanut Butter": 588.0,
+          "Honey": 304.0,
+          "Quinoa": 120.0,
+          "Greek Yogurt": 59.0,
+          "Chia Seeds": 486.0,
+          "Dark Chocolate": 546.0,
+          "Green Tea": 1.0,
+          "Coconut Water": 19.0
         }
 
     def log_food_intake(self):
@@ -392,16 +412,18 @@ def main():
     
       except ValueError:
           print("Invalid input. Please enter a number.")
+
+    health_pulse.choose_fitness_level()  
     
 
   
-    while True:
-        health_pulse.display_menu()
-        try:
-            user_option = int(input("Enter your choice (1-8): "))
-            health_pulse.execute_menu_option(user_option)
-        except ValueError:
-            print("Invalid input. Please enter a number.")
+    # while True:
+    #     health_pulse.display_menu()
+    #     try:
+    #         user_option = int(input("Enter your choice (1-8): "))
+    #         health_pulse.execute_menu_option(user_option)
+    #     except ValueError:
+    #         print("Invalid input. Please enter a number.")
 
 
 if __name__ == "__main__":
