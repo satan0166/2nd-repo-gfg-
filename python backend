@@ -177,6 +177,33 @@ class HealthPulse:
         print("\nBody Mass Index (BMI) Calculation:")
         print("BMI: {:.2f}".format(bmi))
         print("Category: {}".format(self.bmiCategory))
+
+    def suggest_diet_plan(self):
+      print("\nDiet Plan Suggestions based on BMI:")
+      if self.bmiCategory == "Underweight":
+          self.suggest_underweight_diet_plan()
+      elif self.bmiCategory == "Normal weight":
+          self.suggest_normal_weight_diet_plan()
+      elif self.bmiCategory == "Overweight":
+          self.suggest_overweight_diet_plan()
+      else:
+          self.suggest_obese_diet_plan()
+
+    def suggest_underweight_diet_plan(self):
+      print("You are underweight. Here's a suggested diet plan:")
+      # Customize the diet plan for underweight individuals
+
+    def suggest_normal_weight_diet_plan(self):
+      print("You are in the normal weight range. Here's a suggested diet plan:")
+      # Customize the diet plan for normal weight individuals
+
+    def suggest_overweight_diet_plan(self):
+      print("You are overweight. Here's a suggested diet plan:")
+      # Customize the diet plan for overweight individuals
+
+    def suggest_obese_diet_plan(self):
+      print("You are obese. Here's a suggested diet plan:")
+      # Customize the diet plan for obese individuals
   
     def estimate_time_to_target_weight(self):
         calories_per_kg = 7700.0
