@@ -190,20 +190,58 @@ class HealthPulse:
           self.suggest_obese_diet_plan()
 
     def suggest_underweight_diet_plan(self):
-      print("You are underweight. Here's a suggested diet plan:")
-      # Customize the diet plan for underweight individuals
+      print("You are underweight.😊 Let's work on adding some healthy goodness to your diet to help you soar to new heights! 🚀 Here's a suggested diet plan:")
+      self.suggest_diet_plan_preference()
 
     def suggest_normal_weight_diet_plan(self):
-      print("You are in the normal weight range. Here's a suggested diet plan:")
-      # Customize the diet plan for normal weight individuals
+      print("You are in the normal weight range.😊 Let's work on adding some healthy goodness to your diet to help you soar to new heights! 🚀 Here's a suggested diet plan:")
+      self.suggest_diet_plan_preference()
 
     def suggest_overweight_diet_plan(self):
-      print("You are overweight. Here's a suggested diet plan:")
-      # Customize the diet plan for overweight individuals
+      print("You are overweight.😊 Let's work on adding some healthy goodness to your diet to help you soar to new heights! 🚀 Here's a suggested diet plan:")
+      self.suggest_diet_plan_preference()
 
     def suggest_obese_diet_plan(self):
-      print("You are obese. Here's a suggested diet plan:")
-      # Customize the diet plan for obese individuals
+      print("Kindly consult to a healthcare professional for a personalized diet plan.")
+
+  
+    def suggest_diet_plan_preference(self):
+      print("Choose your diet plan category:")
+      print("1. Vegan")
+      print("2. Vegetarian")
+      print("3. Non-Vegetarian")
+
+      def suggest_vegan_diet_plan(self):
+        print("\nVegan Diet Plan:")
+        self.suggest_vegan_food_items("Breakfast")
+        self.suggest_vegan_food_items("Lunch")
+        self.suggest_vegan_food_items("Dinner")
+
+      def suggest_vegetarian_diet_plan(self):
+        print("\nVegetarian Diet Plan:")
+        self.suggest_vegetarian_food_items("Breakfast")
+        self.suggest_vegetarian_items("Lunch")
+        self.suggest_vegetarian_items("Dinner")
+
+      def suggest_non_vegetarian_diet_plan(self):
+        print("\nNon-Vegetarian Diet Plan:")
+      self.suggest_non_vegetarian_food_items("Breakfast")
+      self.suggest_non_vegetarian_items("Lunch")
+      self.suggest_non_vegetarian_items("Dinner")
+
+      category_choice = input("Enter the number corresponding to your diet plan category: ")
+
+      if category_choice == "1":
+          suggest_vegan_diet_plan(self)
+      elif category_choice == "2":
+          suggest_vegetarian_diet_plan(self)
+      elif category_choice == "3":
+          suggest_non_vegetarian_diet_plan(self)
+      else:
+          print("Invalid choice. Please choose a valid option.")
+
+
+      
   
     def estimate_time_to_target_weight(self):
         calories_per_kg = 7700.0
@@ -274,52 +312,52 @@ class HealthPulse:
                 print("Your daily calorie intake is within a healthy range for maintaining your current weight. "
                       "Keep up the good work!")
 
-    def initialize_food_calories(self):
-        # Caloric values are for 100g servings
-        self.foodCalories = {
-          "Apple": 52.0,
-          "Banana": 89.0,
-          "Orange": 43.0,
-          "Chicken Breast": 165.0,
-          "Salmon": 206.0,
-          "Broccoli": 55.0,
-          "Carrot": 41.0,
-          "Potato": 77.0,
-          "Brown Rice": 123.0,
-          "Quinoa": 120.0,
-          "Egg": 143.0,
-          "Milk": 42.0,
-          "Almonds": 576.0,
-          "Avocado": 160.0,
-          "Olive Oil": 884.0,
-          "Yogurt": 59.0,
-          "Cheese": 402.0,
-          "Bread": 265.0,
-          "Pasta": 131.0,
-          "Chocolate": 546.0,
-          "Ice Cream": 207.0,
-          "Soda": 41.0,
-          "Coffee": 2.0,
-          "Tea": 1.0,
-          "Water": 0.0,
-          "Spinach": 23.0,
-          "Tomato": 18.0,
-          "Cucumber": 16.0,
-          "Strawberries": 32.0,
-          "Blueberries": 57.0,
-          "Ground Beef": 250.0,
-          "Shrimp": 99.0,
-          "Sweet Potato": 86.0,
-          "Lentils": 116.0,
-          "Peanut Butter": 588.0,
-          "Honey": 304.0,
-          "Quinoa": 120.0,
-          "Greek Yogurt": 59.0,
-          "Chia Seeds": 486.0,
-          "Dark Chocolate": 546.0,
-          "Green Tea": 1.0,
-          "Coconut Water": 19.0
-        }
+    # def initialize_food_calories(self):
+    #     # Caloric values are for 100g servings
+    #     self.foodCalories = {
+    #       "Apple": 52.0,
+    #       "Banana": 89.0,
+    #       "Orange": 43.0,
+    #       "Chicken Breast": 165.0,
+    #       "Salmon": 206.0,
+    #       "Broccoli": 55.0,
+    #       "Carrot": 41.0,
+    #       "Potato": 77.0,
+    #       "Brown Rice": 123.0,
+    #       "Quinoa": 120.0,
+    #       "Egg": 143.0,
+    #       "Milk": 42.0,
+    #       "Almonds": 576.0,
+    #       "Avocado": 160.0,
+    #       "Olive Oil": 884.0,
+    #       "Yogurt": 59.0,
+    #       "Cheese": 402.0,
+    #       "Bread": 265.0,
+    #       "Pasta": 131.0,
+    #       "Chocolate": 546.0,
+    #       "Ice Cream": 207.0,
+    #       "Soda": 41.0,
+    #       "Coffee": 2.0,
+    #       "Tea": 1.0,
+    #       "Water": 0.0,
+    #       "Spinach": 23.0,
+    #       "Tomato": 18.0,
+    #       "Cucumber": 16.0,
+    #       "Strawberries": 32.0,
+    #       "Blueberries": 57.0,
+    #       "Ground Beef": 250.0,
+    #       "Shrimp": 99.0,
+    #       "Sweet Potato": 86.0,
+    #       "Lentils": 116.0,
+    #       "Peanut Butter": 588.0,
+    #       "Honey": 304.0,
+    #       "Quinoa": 120.0,
+    #       "Greek Yogurt": 59.0,
+    #       "Chia Seeds": 486.0,
+    #       "Dark Chocolate": 546.0,
+    #       "Green Tea": 1.0,
+    #       "Coconut Water": 19.0
+    #     }
 
     def log_food_intake(self):
         print("\nFood Log:")
@@ -456,6 +494,7 @@ def main():
 
     health_pulse.choose_fitness_level() 
     health_pulse.calculate_bmi()
+    health_pulse.suggest_diet_plan()
     
     # while True:
     #     health_pulse.display_menu()
