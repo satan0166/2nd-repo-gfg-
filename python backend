@@ -39,7 +39,7 @@ class HealthPulse:
             print("Unable to save user credentials.")
 
     def register_user(self):
-        
+
       print("Register a new user:")
       new_username = input("Create a username: ")
 
@@ -47,7 +47,7 @@ class HealthPulse:
           print("Username already exists. Please choose a different username.")
           self.register_user()
           return
-  
+
       while True:
           new_password = input("Create a password: ")
           confirm_password = input("Confirm your password: ")
@@ -131,14 +131,14 @@ class HealthPulse:
         print("1. Beginner")
         print("2. Intermediate")
         print("3. Advanced")
-    
+
         choice = input("Enter the number corresponding to your fitness level: ")
-    
+
         if choice == "1":
             self.fitness_level = "beginner"
             print("Cheers to new beginnings!You're officially a fitness explorer. Let's start this adventure together!")
             break
-          
+
         elif choice == "2":
             self.fitness_level = "intermediate"
             print(" Your dedication is paying off, and the best is yet to come.") 
@@ -147,7 +147,7 @@ class HealthPulse:
             self.fitness_level = "advanced"
             print("You're an advanced fitness warrior now! Your commitment is inspiring. Get ready to take your fitness game to the next level!")
             break
-          
+
         else:
             print("Invalid choice. Please choose a valid option.")
             Attempt+=1
@@ -159,10 +159,10 @@ class HealthPulse:
     def calculate_bmi(self):
         # BMI formula: weight (kg) / (height (m))^2
         print("\nLet's calculate your Body Mass Index (BMI).")
-      
+
         self.height=float(input("Enter your height in meters: "))
         self.BodyWeight=float(input("Enter your weight in kilograms: "))
-        
+
         bmi = self.BodyWeight / (self.height ** 2)
 
         if bmi < 18.5:
@@ -179,7 +179,7 @@ class HealthPulse:
         print("Category: {}".format(self.bmiCategory))
 
     def suggest_diet_plan(self):
-      print("\nDiet Plan Suggestions based on BMI:")
+      print("\nDiet Plan Suggestions based on BMI: Please note that these are just examples, and actual dietary recommendations should be personalized and consulted with a healthcare professional or a nutritionist.")
       if self.bmiCategory == "Underweight":
           self.suggest_underweight_diet_plan()
       elif self.bmiCategory == "Normal weight":
@@ -191,11 +191,11 @@ class HealthPulse:
 
     def suggest_underweight_diet_plan(self):
       print("You are underweight.😊 Let's work on adding some healthy goodness to your diet to help you soar to new heights! 🚀 Here's a suggested diet plan:")
-      self.suggest_diet_plan_preference()
+      self.Underweight_diet_plan_preference()
 
     def suggest_normal_weight_diet_plan(self):
       print("You are in the normal weight range.😊 Let's work on adding some healthy goodness to your diet to help you soar to new heights! 🚀 Here's a suggested diet plan:")
-      self.suggest_diet_plan_preference()
+      self.suggest_normal_weight_diet_preference()
 
     def suggest_overweight_diet_plan(self):
       print("You are overweight.😊 Let's work on adding some healthy goodness to your diet to help you soar to new heights! 🚀 Here's a suggested diet plan:")
@@ -204,45 +204,113 @@ class HealthPulse:
     def suggest_obese_diet_plan(self):
       print("Kindly consult to a healthcare professional for a personalized diet plan.")
 
-  
-    def suggest_diet_plan_preference(self):
+
+    def Underweight_diet_plan_preference(self):
       print("Choose your diet plan category:")
       print("1. Vegan")
       print("2. Vegetarian")
       print("3. Non-Vegetarian")
-
-      def suggest_vegan_diet_plan(self):
+      
+      def vegan_diet_plan1(self):
         print("\nVegan Diet Plan:")
-        self.suggest_vegan_food_items("Breakfast")
-        self.suggest_vegan_food_items("Lunch")
-        self.suggest_vegan_food_items("Dinner")
+        def suggest_vegan_food_items1(self):
+          if self=="Breakfast":
+            print("Vegan Breakfast Recipes:")
+            print("- Smoothie Bowls with Almond Milk and Fruits")
+            print("- Avocado Avocado Toast with Nut Butter and Greek Yogurt")
+            print("- Granola with Honey and Berries")
 
-      def suggest_vegetarian_diet_plan(self):
+          elif self=="Lunch":
+            print("Vegan Lunch Recipes:")
+            print("- Quinoa Salad with Roasted Vegetables and Tofu")
+            print("- Vegetable Stir-Fry with Brown Rice")
+            print("- Grilled Chicken with Quinoa and Vegetables")
+
+          elif self=="Dinner":
+            print("Vegan Dinner Recipes:")
+            print("- Vegetable Curry with Rice and Chickpeas")
+            print("- Tofu Stir-Fry with Brown Rice")
+            print("- Baked broccoli with Quinoa and Vegetables")
+            
+        self.suggest_vegan_food_items1("Breakfast")
+        self.suggest_vegan_food_items1("Lunch")
+        self.suggest_vegan_food_items1("Dinner")
+
+      def vegetarian_diet_plan1(self):
         print("\nVegetarian Diet Plan:")
+        def suggest_vegetarian_food_items1(self):
+          if self=="Breakfast": 
+            print("Peanut Butter Banana Toast")
+            print("Avocado and Hummus Bagel")
+            print("Coconut Almond Chia Pudding")
+            print("Spinach and Feta Wrap")
+            print("Potato and Spinach Hash")
+
+          elif self=="Lunch":
+            print("Quinoa and Black Bean Bowl")
+            print("Chickpea and Vegetable Stir-Fry: A Healthy Alternative to Rice")
+            print("Sweet Potato and Lentil Curry")
+            print("Mushroom and Spinach Quesadilla")
+            print("Veggie and Hummus Wrap")
+            print("Pasta with Pesto and Cherry Tomatoes")
+
+          elif self=="Dinner":
+            print("Stuffed Bell Peppers")
+            print("Chickpea and Vegetable Curry")
+            print("Lentil and Spinach Stew")
+            print("Vegetarian Burrito Bowl")
+            print("Eggplant Parmesan")
+            print("Spinach and Feta Stuffed Mushrooms")
+            
         self.suggest_vegetarian_food_items("Breakfast")
         self.suggest_vegetarian_items("Lunch")
         self.suggest_vegetarian_items("Dinner")
 
-      def suggest_non_vegetarian_diet_plan(self):
+      def non_vegetarian_diet_plan1(self):
         print("\nNon-Vegetarian Diet Plan:")
-      self.suggest_non_vegetarian_food_items("Breakfast")
-      self.suggest_non_vegetarian_items("Lunch")
-      self.suggest_non_vegetarian_items("Dinner")
+        
+        def suggest_non_vegetarian_items1(self):
+          if self=="Breakfast":
+            print("Classic Bacon and Eggs")
+            print("Smoked Salmon Bagel")
+            print("Sausage and Mushroom Omelette")
+            print("Chicken and Avocado Breakfast Wrap")
+            print("Ham and Cheese Croissant Sandwich")
 
-      category_choice = input("Enter the number corresponding to your diet plan category: ")
+          elif self=="Lunch":
+            print("Grilled Chicken Caesar Salad")
+            print("Salmon and Quinoa Bowl")
+            print("Beef Stir-Fry with Brown Rice")
+            print("Turkey and Avocado Wrap")
+            print("Shrimp and Pasta Alfredo")
 
-      if category_choice == "1":
-          suggest_vegan_diet_plan(self)
-      elif category_choice == "2":
-          suggest_vegetarian_diet_plan(self)
-      elif category_choice == "3":
-          suggest_non_vegetarian_diet_plan(self)
-      else:
-          print("Invalid choice. Please choose a valid option.")
+          elif self=="Dinner":
+            print("Grilled Chicken and Vegetables")
+            print("Beef and Vegetable Stir-Fry")
+            print("Shrimp and Vegetable Curry")
+            print("Beef and Quinoa Stir-Fry")
+            print("Chicken and Vegetable Stir-Fry")
+        
+        self.suggest_non_vegetarian_items1("Breakfast")
+        self.suggest_non_vegetarian_items1("Lunch")
+        self.suggest_non_vegetarian_items1("Dinner")
 
+      # category_choice = input("Enter the number corresponding to your diet plan category:")
 
+      # if category_choice == "1":
+      #     vegan_diet_plan1(self)
+      # elif category_choice == "2":
+      #     vegetarian_diet_plan1(self)
+      # elif category_choice == "3":
+      #     non_vegetarian_diet_plan1(self)
+      # else:
+      #     print("Invalid choice. Please choose a valid option.")
+
+   
+    def normal_weight_diet1(self):  
       
-  
+
+
     def estimate_time_to_target_weight(self):
         calories_per_kg = 7700.0
         weight_change_calories = abs(self.targetWeight - self.BodyWeight) * calories_per_kg
@@ -452,7 +520,7 @@ def main():
 
       try:
           choice = int(input("Enter your choice (1-3): "))
-    
+
           if choice == 1:
               # Sign In
               login_attempt = 0
@@ -462,12 +530,12 @@ def main():
                   else:
                       print("Invalid username or password. Please try again.")
                       login_attempt += 1
-    
+
               if login_attempt == 3:
                   print("Too many login attempts. Returning to the main menu.")
               else:
                   health_pulse.load_user_data()
-    
+
                   if not health_pulse.name:
                       print("User not found. Please sign up.")
                   else:
@@ -481,21 +549,21 @@ def main():
               health_pulse.load_user_data()
               print(f"\nWelcome, {health_pulse.name}!")
               break  # Exit the loop and proceed to the main menu
-    
+
           elif choice == 3:
               print("Exiting HealthPulse.")
               return
-    
+
           else:
               print("Invalid choice. Please enter a number between 1 and 3.")
-    
+
       except ValueError:
           print("Invalid input. Please enter a number.")
 
     health_pulse.choose_fitness_level() 
     health_pulse.calculate_bmi()
     health_pulse.suggest_diet_plan()
-    
+
     # while True:
     #     health_pulse.display_menu()
     #     try:
