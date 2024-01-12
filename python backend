@@ -199,7 +199,7 @@ class HealthPulse:
 
     def suggest_overweight_diet_plan(self):
       print("You are overweight.😊 Let's work on adding some healthy goodness to your diet to help you soar to new heights! 🚀 Here's a suggested diet plan:")
-      self.suggest_diet_plan_preference()
+      self.over_weight_diet3()
 
     def suggest_obese_diet_plan(self):
       print("Kindly consult to a healthcare professional for a personalized diet plan.")
@@ -295,19 +295,220 @@ class HealthPulse:
         self.suggest_non_vegetarian_items1("Lunch")
         self.suggest_non_vegetarian_items1("Dinner")
 
-      # category_choice = input("Enter the number corresponding to your diet plan category:")
+      category_choice = input("Enter the number corresponding to your diet plan category:")
 
-      # if category_choice == "1":
-      #     vegan_diet_plan1(self)
-      # elif category_choice == "2":
-      #     vegetarian_diet_plan1(self)
-      # elif category_choice == "3":
-      #     non_vegetarian_diet_plan1(self)
-      # else:
-      #     print("Invalid choice. Please choose a valid option.")
+      if category_choice == "1":
+          vegan_diet_plan1(self)
+      elif category_choice == "2":
+          vegetarian_diet_plan1(self)
+      elif category_choice == "3":
+          non_vegetarian_diet_plan1(self)
+      else:
+          print("Invalid choice. Please choose a valid option.")
 
    
-    def normal_weight_diet1(self):  
+    def normal_weight_diet2(self):  
+      print("Choose your diet plan category:")
+      print("1. Vegan")
+      print("2. Vegetarian")
+      print("3. Non-Vegetarian")
+
+      def vegan_diet_plan2(self):
+        print("\nVegan Diet Plan:")
+        def suggest_vegan_food_items2(self):
+          if self=="Breakfast":
+            print("Vegan Breakfast Recipes:")
+            print("- Oatmeal with Fruit and Nuts")
+            print("- Smoothie Bowl with Almond Milk and Fruits")
+            print("- Chia Seed Pudding with Tropical Fruits")
+
+          elif self=="Lunch":
+            print("Vegan Lunch Recipes:")
+            print("- Chickpea and Spinach Coconut Curry")
+            print("- Vegan Mediterranean Wrap")
+            print("- Vegan Pasta Primavera")
+
+          elif self=="Dinner":
+            print("Vegan Dinner Recipes:")
+            print("- Vegan Lentil and Vegetable Curry")
+            print("- Stuffed Bell Peppers with Quinoa and Black Beans")
+            print("- Vegan Cauliflower Alfredo Pasta")
+
+        self.suggest_vegan_food_items2("Breakfast")
+        self.suggest_vegan_food_items2("Lunch")
+        self.suggest_vegan_food_items2("Dinner")
+
+      def vegetarian_diet_plan2(self):
+        print("\nVegetarian Diet Plan:")
+        def suggest_vegetarian_food_items2(self):
+          if self=="Breakfast": 
+            print("Whole Wheat Pancakes with Berries")
+            print("Chia Seed Pudding with Tropical Fruits:")
+            print("Whole Grain Toast with Butter and Banana Slices")
+            print("Sweet Potato and Black Bean Breakfast Hash")
+            print("Veggie and Cheese Bagel Sandwich")
+
+          elif self=="Lunch":
+            print("Quinoa Salad with Chickpeas and Avocado")
+            print("Mushroom and Spinach Stuffed Bell Peppers")
+            print("Vegetarian Sushi Bowl")
+            print("Vegetarian Tacos with Black Beans and Corn Salsa")
+            print("Vegetable Biryani")
+            print("Palak Paneer with Rice and Lentils:")
+
+          elif self=="Dinner":
+            print("Eggplant Parmesan")
+            print("Mushroom and Spinach Lasagna")
+            print("Cauliflower and Chickpea Curry")
+            print("Sweet Potato and Black Bean Enchiladas")
+            print("Vegetarian Lentil Soup")
+            print("Spinach and Feta Stuffed Portobello Mushrooms")
+
+        self.suggest_vegetarian_food_items2("Breakfast")
+        self.suggest_vegetarian_items2("Lunch")
+        self.suggest_vegetarian_items2("Dinner")
+
+      def non_vegetarian_diet_plan2(self):
+        print("\nNon-Vegetarian Diet Plan:")
+
+        def suggest_non_vegetarian_items2(self):
+          if self=="Breakfast":
+            print("Egg and Veggie Scramble")
+            print("Chicken and Avocado Breakfast Wrap")
+            print("Anda Bhurji Sandwich")
+            print("Avocado Toast with Smoked Salmon")
+            print("Breakfast Quesadilla with Chorizo")
+# start from here 
+          elif self=="Lunch":
+            print("Grilled Chicken Caesar Salad")
+            print("Salmon and Quinoa Bowl")
+            print("Beef Stir-Fry with Brown Rice")
+            print("Turkey and Avocado Wrap")
+            print("Shrimp and Pasta Alfredo")
+
+          elif self=="Dinner":
+            print("Grilled Chicken and Vegetables")
+            print("Beef and Vegetable Stir-Fry")
+            print("Shrimp and Vegetable Curry")
+            print("Beef and Quinoa Stir-Fry")
+            print("Chicken and Vegetable Stir-Fry")
+
+        self.suggest_non_vegetarian_items2("Breakfast")
+        self.suggest_non_vegetarian_items2("Lunch")
+        self.suggest_non_vegetarian_items2("Dinner")
+
+      category_choice = input("Enter the number corresponding to your diet plan category:")
+
+      if category_choice == "1":
+          vegan_diet_plan2(self)
+      elif category_choice == "2":
+          vegetarian_diet_plan2(self)
+      elif category_choice == "3":
+          non_vegetarian_diet_plan2(self)
+      else:
+          print("Invalid choice. Please choose a valid option.")
+
+
+    def over_weight_diet3(self):
+      print("Choose your diet plan category:")
+      print("1. Vegan")
+      print("2. Vegetarian")
+      print("3. Non-Vegetarian")
+
+      def vegan_diet_plan3(self):
+        print("\nVegan Diet Plan:")
+        def suggest_vegan_food_items3(self):
+          if self=="Breakfast":
+            print("Vegan Breakfast Recipes:")
+            print("- Smoothie Bowls with Almond Milk and Fruits")
+            print("- Avocado Avocado Toast with Nut Butter and Greek Yogurt")
+            print("- Granola with Honey and Berries")
+
+          elif self=="Lunch":
+            print("Vegan Lunch Recipes:")
+            print("- Quinoa Salad with Roasted Vegetables and Tofu")
+            print("- Vegetable Stir-Fry with Brown Rice")
+            print("- Grilled Chicken with Quinoa and Vegetables")
+
+          elif self=="Dinner":
+            print("Vegan Dinner Recipes:")
+            print("- Vegetable Curry with Rice and Chickpeas")
+            print("- Tofu Stir-Fry with Brown Rice")
+            print("- Baked broccoli with Quinoa and Vegetables")
+
+        self.suggest_vegan_food_items3("Breakfast")
+        self.suggest_vegan_food_items3("Lunch")
+        self.suggest_vegan_food_items3("Dinner")
+
+      def vegetarian_diet_plan3(self):
+        print("\nVegetarian Diet Plan:")
+        def suggest_vegetarian_food_items3(self):
+          if self=="Breakfast": 
+            print("Peanut Butter Banana Toast")
+            print("Avocado and Hummus Bagel")
+            print("Coconut Almond Chia Pudding")
+            print("Spinach and Feta Wrap")
+            print("Potato and Spinach Hash")
+
+          elif self=="Lunch":
+            print("Quinoa and Black Bean Bowl")
+            print("Chickpea and Vegetable Stir-Fry: A Healthy Alternative to Rice")
+            print("Sweet Potato and Lentil Curry")
+            print("Mushroom and Spinach Quesadilla")
+            print("Veggie and Hummus Wrap")
+            print("Pasta with Pesto and Cherry Tomatoes")
+
+          elif self=="Dinner":
+            print("Stuffed Bell Peppers")
+            print("Chickpea and Vegetable Curry")
+            print("Lentil and Spinach Stew")
+            print("Vegetarian Burrito Bowl")
+            print("Eggplant Parmesan")
+            print("Spinach and Feta Stuffed Mushrooms")
+
+        self.suggest_vegetarian_food_items3("Breakfast")
+        self.suggest_vegetarian_items3("Lunch")
+        self.suggest_vegetarian_items3("Dinner")
+
+      def non_vegetarian_diet_plan3(self):
+        print("\nNon-Vegetarian Diet Plan:")
+
+        def suggest_non_vegetarian_items3(self):
+          if self=="Breakfast":
+            print("Classic Bacon and Eggs")
+            print("Smoked Salmon Bagel")
+            print("Sausage and Mushroom Omelette")
+            print("Chicken and Avocado Breakfast Wrap")
+            print("Ham and Cheese Croissant Sandwich")
+
+          elif self=="Lunch":
+            print("Grilled Chicken Caesar Salad")
+            print("Salmon and Quinoa Bowl")
+            print("Beef Stir-Fry with Brown Rice")
+            print("Turkey and Avocado Wrap")
+            print("Shrimp and Pasta Alfredo")
+
+          elif self=="Dinner":
+            print("Grilled Chicken and Vegetables")
+            print("Beef and Vegetable Stir-Fry")
+            print("Shrimp and Vegetable Curry")
+            print("Beef and Quinoa Stir-Fry")
+            print("Chicken and Vegetable Stir-Fry")
+
+        self.suggest_non_vegetarian_items3("Breakfast")
+        self.suggest_non_vegetarian_items3("Lunch")
+        self.suggest_non_vegetarian_items3("Dinner")
+
+      category_choice = input("Enter the number corresponding to your diet plan category:")
+
+      if category_choice == "1":
+          vegan_diet_plan3(self)
+      elif category_choice == "2":
+          vegetarian_diet_plan3(self)
+      elif category_choice == "3":
+          non_vegetarian_diet_plan3(self)
+      else:
+          print("Invalid choice. Please choose a valid option.")
       
 
 
