@@ -508,10 +508,11 @@ class HealthPulse:
       elif category_choice == "3":
           non_vegetarian_diet_plan3(self)
       else:
-          print("Invalid choice. Please choose a valid option.")
+          print("Invalid choice. Please choose a valid option.") 
+        
       
 
-
+# not done yet
     def estimate_time_to_target_weight(self):
         calories_per_kg = 7700.0
         weight_change_calories = abs(self.targetWeight - self.BodyWeight) * calories_per_kg
@@ -533,7 +534,7 @@ class HealthPulse:
                 estimated_weeks = int(estimated_days / 7)
                 print(f" in approximately {estimated_weeks} weeks.")
             print()
-
+# needs to be done
     def provide_calorie_recommendation(self):
         calorie_deficit_threshold = 500.0
         calorie_deficit = (self.targetWeight - self.BodyWeight) * 7700.0 / 1000.0
@@ -627,7 +628,7 @@ class HealthPulse:
     #       "Green Tea": 1.0,
     #       "Coconut Water": 19.0
     #     }
-
+# will complete soon 
     def log_food_intake(self):
         print("\nFood Log:")
         food_item = input("Enter the name of the food item you consumed: ")
@@ -701,7 +702,8 @@ class HealthPulse:
     #     else:
     #         print("Invalid option. Please choose a valid option.")
 
-    def view_diet_plan(self):
+  # will be done 
+      def view_diet_plan(self):
         print("\nDiet Plan:")
         for plan in self.dietPlan:
             print(plan)
