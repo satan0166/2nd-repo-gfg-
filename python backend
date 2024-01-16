@@ -18,8 +18,8 @@ class HealthPulse:
         self.username = ""
         self.password = ""
 
-        self.initialize_food_calories()
-        self.estimate_time_to_target_weight()
+        # self.initialize_food_calories()
+        # self.estimate_time_to_target_weight()
 
     def is_username_exists(self, username):
         try:
@@ -124,6 +124,7 @@ class HealthPulse:
       print("Let's get started on your personalized health and fitness plan.")
       self.name = input("Please enter your name: ")
 
+class dietPlan_Beginner_Intermediate:  
     def choose_fitness_level(self):
       Attempt=0
       while Attempt<3:
@@ -137,15 +138,18 @@ class HealthPulse:
         if choice == "1":
             self.fitness_level = "beginner"
             print("Cheers to new beginnings!You're officially a fitness explorer. Let's start this adventure together!")
+            self.suggest_diet_plan()
             break
 
         elif choice == "2":
             self.fitness_level = "intermediate"
             print(" Your dedication is paying off, and the best is yet to come.") 
+            self.suggest_diet_plan()
             break
         elif choice == "3":
             self.fitness_level = "advanced"
             print("You're an advanced fitness warrior now! Your commitment is inspiring. Get ready to take your fitness game to the next level!")
+            self.suggest_diet_plan_adv()
             break
 
         else:
@@ -195,7 +199,7 @@ class HealthPulse:
 
     def suggest_normal_weight_diet_plan(self):
       print("You are in the normal weight range.😊 Let's work on adding some healthy goodness to your diet to help you soar to new heights! 🚀 Here's a suggested diet plan:")
-      self.suggest_normal_weight_diet_preference()
+      self.normal_weight_diet2()
 
     def suggest_overweight_diet_plan(self):
       print("You are overweight.😊 Let's work on adding some healthy goodness to your diet to help you soar to new heights! 🚀 Here's a suggested diet plan:")
@@ -210,7 +214,7 @@ class HealthPulse:
       print("1. Vegan")
       print("2. Vegetarian")
       print("3. Non-Vegetarian")
-      
+
       def vegan_diet_plan1(self):
         print("\nVegan Diet Plan:")
         def suggest_vegan_food_items1(self):
@@ -231,7 +235,7 @@ class HealthPulse:
             print("- Vegetable Curry with Rice and Chickpeas")
             print("- Tofu Stir-Fry with Brown Rice")
             print("- Baked broccoli with Quinoa and Vegetables")
-            
+
         self.suggest_vegan_food_items1("Breakfast")
         self.suggest_vegan_food_items1("Lunch")
         self.suggest_vegan_food_items1("Dinner")
@@ -261,14 +265,14 @@ class HealthPulse:
             print("Vegetarian Burrito Bowl")
             print("Eggplant Parmesan")
             print("Spinach and Feta Stuffed Mushrooms")
-            
+
         self.suggest_vegetarian_food_items("Breakfast")
         self.suggest_vegetarian_items("Lunch")
         self.suggest_vegetarian_items("Dinner")
 
       def non_vegetarian_diet_plan1(self):
         print("\nNon-Vegetarian Diet Plan:")
-        
+
         def suggest_non_vegetarian_items1(self):
           if self=="Breakfast":
             print("Classic Bacon and Eggs")
@@ -290,7 +294,7 @@ class HealthPulse:
             print("Shrimp and Vegetable Curry")
             print("Beef and Quinoa Stir-Fry")
             print("Chicken and Vegetable Stir-Fry")
-        
+
         self.suggest_non_vegetarian_items1("Breakfast")
         self.suggest_non_vegetarian_items1("Lunch")
         self.suggest_non_vegetarian_items1("Dinner")
@@ -306,7 +310,7 @@ class HealthPulse:
       else:
           print("Invalid choice. Please choose a valid option.")
 
-   
+
     def normal_weight_diet2(self):  
       print("Choose your diet plan category:")
       print("1. Vegan")
@@ -509,78 +513,82 @@ class HealthPulse:
           non_vegetarian_diet_plan3(self)
       else:
           print("Invalid choice. Please choose a valid option.") 
-        
+
+class dietPlan_Adv(dietPlan_Beginner_Intermediate):
+      
       
 
+
+
 # not done yet
-    def estimate_time_to_target_weight(self):
-        calories_per_kg = 7700.0
-        weight_change_calories = abs(self.targetWeight - self.BodyWeight) * calories_per_kg
+    # def estimate_time_to_target_weight(self):
+    #     calories_per_kg = 7700.0
+    #     weight_change_calories = abs(self.targetWeight - self.BodyWeight) * calories_per_kg
 
-        if self.netCalorieIntake != 0:
-            estimated_days = weight_change_calories / abs(self.netCalorieIntake)
+    #     if self.netCalorieIntake != 0:
+    #         estimated_days = weight_change_calories / abs(self.netCalorieIntake)
 
-            print("\nEstimated time to achieve target weight: ", end="")
-            if self.netCalorieIntake > 0:
-                print("Losing ", end="")
-            else:
-                print("Gaining ", end="")
+    #         print("\nEstimated time to achieve target weight: ", end="")
+    #         if self.netCalorieIntake > 0:
+    #             print("Losing ", end="")
+    #         else:
+    #             print("Gaining ", end="")
 
-            print(f"{abs(self.targetWeight - self.BodyWeight)} kg", end="")
+    #         print(f"{abs(self.targetWeight - self.BodyWeight)} kg", end="")
 
-            if estimated_days < 7:
-                print(" in less than a week.")
-            else:
-                estimated_weeks = int(estimated_days / 7)
-                print(f" in approximately {estimated_weeks} weeks.")
-            print()
+    #         if estimated_days < 7:
+    #             print(" in less than a week.")
+    #         else:
+    #             estimated_weeks = int(estimated_days / 7)
+    #             print(f" in approximately {estimated_weeks} weeks.")
+    #         print()
 # needs to be done
-    def provide_calorie_recommendation(self):
-        calorie_deficit_threshold = 500.0
-        calorie_deficit = (self.targetWeight - self.BodyWeight) * 7700.0 / 1000.0
+    # def provide_calorie_recommendation(self):
+    #     calorie_deficit_threshold = 500.0
+    #     calorie_deficit = (self.targetWeight - self.BodyWeight) * 7700.0 / 1000.0
 
-        if self.targetWeight < self.BodyWeight:
-            # User wants to lose weight
-            lower_threshold = calorie_deficit - calorie_deficit_threshold
-            upper_threshold = calorie_deficit + calorie_deficit_threshold
+    #     if self.targetWeight < self.BodyWeight:
+    #         # User wants to lose weight
+    #         lower_threshold = calorie_deficit - calorie_deficit_threshold
+    #         upper_threshold = calorie_deficit + calorie_deficit_threshold
 
-            if self.netCalorieIntake < lower_threshold:
-                print("Your current daily calorie intake may be too low for a healthy weight loss. "
-                      "Consider increasing your calorie intake.")
-            elif self.netCalorieIntake > upper_threshold:
-                print("Your current daily calorie intake may be too high for a healthy weight loss. "
-                      "Consider reducing your calorie intake.")
-            else:
-                print("Your daily calorie intake is within a healthy range for your weight loss goal. "
-                      "Keep up the good work!")
-        elif self.targetWeight > self.BodyWeight:
-            # User wants to gain weight
-            lower_threshold = calorie_deficit - calorie_deficit_threshold
-            upper_threshold = calorie_deficit + calorie_deficit_threshold
+    #         if self.netCalorieIntake < lower_threshold:
+    #             print("Your current daily calorie intake may be too low for a healthy weight loss. "
+    #                   "Consider increasing your calorie intake.")
+    #         elif self.netCalorieIntake > upper_threshold:
+    #             print("Your current daily calorie intake may be too high for a healthy weight loss. "
+    #                   "Consider reducing your calorie intake.")
+    #         else:
+    #             print("Your daily calorie intake is within a healthy range for your weight loss goal. "
+    #                   "Keep up the good work!")
+    #     elif self.targetWeight > self.BodyWeight:
+    #         # User wants to gain weight
+    #         lower_threshold = calorie_deficit - calorie_deficit_threshold
+    #         upper_threshold = calorie_deficit + calorie_deficit_threshold
 
-            if self.netCalorieIntake < lower_threshold:
-                print("Your current daily calorie intake may be too low for a healthy weight gain. "
-                      "Consider increasing your calorie intake.")
-            elif self.netCalorieIntake > upper_threshold:
-                print("Your current daily calorie intake may be too high for a healthy weight gain. "
-                      "Consider reducing your calorie intake.")
-            else:
-                print("Your daily calorie intake is within a healthy range for your weight gain goal. "
-                      "Keep up the good work!")
-        else:
-            # User wants to maintain current weight
-            lower_threshold = calorie_deficit - calorie_deficit_threshold
-            upper_threshold = calorie_deficit + calorie_deficit_threshold
+    #         if self.netCalorieIntake < lower_threshold:
+    #             print("Your current daily calorie intake may be too low for a healthy weight gain. "
+    #                   "Consider increasing your calorie intake.")
+    #         elif self.netCalorieIntake > upper_threshold:
+    #             print("Your current daily calorie intake may be too high for a healthy weight gain. "
+    #                   "Consider reducing your calorie intake.")
+    #         else:
+    #             print("Your daily calorie intake is within a healthy range for your weight gain goal. "
+    #                   "Keep up the good work!")
+    #     else:
+    #         # User wants to maintain current weight
+    #         lower_threshold = calorie_deficit - calorie_deficit_threshold
+    #         upper_threshold = calorie_deficit + calorie_deficit_threshold
 
-            if self.netCalorieIntake < lower_threshold:
-                print("Your current daily calorie intake may be too low for maintaining your weight. "
-                      "Consider increasing your calorie intake.")
-            elif self.netCalorieIntake > upper_threshold:
-                print("Your current daily calorie intake may be too high for maintaining your weight. "
-                      "Consider reducing your calorie intake.")
-            else:
-                print("Your daily calorie intake is within a healthy range for maintaining your current weight. "
-                      "Keep up the good work!")
+    #         if self.netCalorieIntake < lower_threshold:
+    #             print("Your current daily calorie intake may be too low for maintaining your weight. "
+    #                   "Consider increasing your calorie intake.")
+    #         elif self.netCalorieIntake > upper_threshold:
+    #             print("Your current daily calorie intake may be too high for maintaining your weight. "
+    #                   "Consider reducing your calorie intake.")
+    #         else:
+    #             print("Your daily calorie intake is within a healthy range for maintaining your current weight. "
+    #                   "Keep up the good work!")
 
     # def initialize_food_calories(self):
     #     # Caloric values are for 100g servings
@@ -703,7 +711,7 @@ class HealthPulse:
     #         print("Invalid option. Please choose a valid option.")
 
   # will be done 
-      def view_diet_plan(self):
+    def view_diet_plan(self):
         print("\nDiet Plan:")
         for plan in self.dietPlan:
             print(plan)
@@ -715,6 +723,7 @@ class HealthPulse:
 
 def main():
     health_pulse = HealthPulse()
+    dietplan_beginner_intermediate = dietPlan_Beginner_Intermediate()
     print("\nWelcome to HealthPulse!")
     while True:
       print("1. Sign In")
@@ -763,9 +772,9 @@ def main():
       except ValueError:
           print("Invalid input. Please enter a number.")
 
-    health_pulse.choose_fitness_level() 
-    health_pulse.calculate_bmi()
-    health_pulse.suggest_diet_plan()
+    dietplan_beginner_intermediate.choose_fitness_level() 
+    dietplan_beginner_intermediate.calculate_bmi()
+    dietplan_beginner_intermediate.suggest_diet_plan()
 
     # while True:
     #     health_pulse.display_menu()
