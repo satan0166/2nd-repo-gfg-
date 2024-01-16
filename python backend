@@ -1,4 +1,5 @@
 import math
+import re
 
 class HealthPulse:
     def __init__(self):
@@ -49,7 +50,12 @@ class HealthPulse:
           return
 
       while True:
-          new_password = input("Create a password: ")
+          new_password = input("Create a password: Make sure it contains at least one capital letter, one special character, one number, and has a minimum length of 8 characters. ")
+        
+          if not self.is_valid_password(new_password):
+            print("Invalid password. Make sure it contains at least one capital letter, one special character, one number, and has a minimum length of 8 characters.")
+            continue
+        
           confirm_password = input("Confirm your password: ")
 
           if new_password == confirm_password:
@@ -58,6 +64,9 @@ class HealthPulse:
               print("Passwords do not match. Please try again.")
 
       self.save_credentials(new_username, new_password)
+      
+    def is_valid_password(self, password):
+      return re.search(r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{8,}$', password) is not None
 
     def login(self):
         print("Login to HealthPulse:")
