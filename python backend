@@ -524,6 +524,7 @@ class dietPlan_Beginner_Intermediate:
           print("Invalid choice. Please choose a valid option.") 
 
 class dietPlan_Adv(dietPlan_Beginner_Intermediate):
+  
       
       
 
