@@ -158,7 +158,7 @@ class dietPlan_Beginner_Intermediate:
         elif choice == "3":
             self.fitness_level = "advanced"
             print("You're an advanced fitness warrior now! Your commitment is inspiring. Get ready to take your fitness game to the next level!")
-            self.suggest_diet_plan_adv()
+            self.suggest_diet_plan()
             break
 
         else:
@@ -524,54 +524,6 @@ class dietPlan_Beginner_Intermediate:
           print("Invalid choice. Please choose a valid option.") 
 
 
-# for users on the advance fitness level 
-class dietPlan_Adv(dietPlan_Beginner_Intermediate):
-  def choose_fitness_level(self):
-    Attempt=0
-    while Attempt<3:
-      print("\nChoose your fitness level:")
-      print("1. Beginner")
-      print("2. Intermediate")
-      print("3. Advanced")
-
-      choice = input("Enter the number corresponding to your fitness level: ")
-
-      if choice == "1":
-          self.fitness_level = "beginner"
-          print("Cheers to new beginnings!You're officially a fitness explorer. Let's start this adventure together!")
-          self.suggest_diet_plan()
-          break
-
-      elif choice == "2":
-          self.fitness_level = "intermediate"
-          print(" Your dedication is paying off, and the best is yet to come.") 
-          self.suggest_diet_plan()
-          break
-      elif choice == "3":
-          self.fitness_level = "advanced"
-          print("You're an advanced fitness warrior now! Your commitment is inspiring. Get ready to take your fitness game to the next level!")
-          self.suggest_diet_plan_adv()
-          break
-
-      else:
-          print("Invalid choice. Please choose a valid option.")
-          Attempt+=1
-
-    if Attempt==3:
-      print("You have exceeded the maximum number of attempts. Kindly choose from the given options.")
-      self.choose_fitness_level()
-
-    protein_supplements = input("Do you consume any additional protein supplements for your gym workouts? (yes/no): ").lower()
-
-    if protein_supplements == "yes":
-        supplements_list = input("Please provide details about the protein supplements you consume: ")
-        protein_amount = float(input("How much protein do you consume from supplements in grams per day? "))
-        print("Great! Make sure to include {} in your diet, providing an additional {:.2f} grams of protein per day.".format(supplements_list, protein_amount))
-    elif protein_supplements == "no":
-        print("That's okay! If you ever decide to include protein supplements, consult with a nutritionist for personalized advice.")
-    else:
-        print("Invalid choice. Please choose either 'yes' or 'no'.")
-  
   
 
 # not done yet
