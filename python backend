@@ -522,6 +522,39 @@ class dietPlan_Beginner_Intermediate:
       print("\nHydration Recommendation:")
       print("Drink at least {} liters of water daily.".format(daily_water_intake))
 
+    def choose_allergies(self):
+      allergies = ["Dairy", "Gluten", "Nuts", "Soy", "Eggs"]
+
+      print("\nChoose your allergies (Enter numbers separated by commas):")
+      for i, allergy in enumerate(allergies, 1):
+          print(f"{i}. {allergy}")
+
+      selected_allergies = input("Enter the numbers corresponding to your allergies: ").split(',')
+      selected_allergies = [allergies[int(index) - 1] for index in selected_allergies]
+
+      print("\nSelected Allergies:", ', '.join(selected_allergies))
+      self.suggest_allergy_specific_diet(selected_allergies)
+
+    def suggest_allergy_specific_diet(self, selected_allergies):
+      print("\nDiet Plan Suggestions based on Allergies:")
+
+      # Example diet suggestions based on allergies
+      if "Dairy" in selected_allergies:
+          print("Avoid dairy products. Consider alternatives like almond or soy milk.")
+
+      elif "Gluten" in selected_allergies:
+          print("Opt for gluten-free grains like rice, quinoa, and oats.")
+
+      elif "Nuts" in selected_allergies:
+          print("Avoid nuts. Consider alternatives like almonds or peanuts.")
+
+      elif "Soy" in selected_allergies:
+          print("Avoid soy products. Consider alternatives like almond or soy milk.")
+
+      # elif "Eggs" in selected_allergies:
+      #     print("Avoid eggs. Consider alternatives like chicken or tofu.")
+          
+
 
   
 
@@ -782,6 +815,7 @@ def main():
     dietplan_beginner_intermediate.calculate_bmi()
     dietplan_beginner_intermediate.suggest_diet_plan()
     health_pulse.suggest_water_intake()
+    dietplan_beginner_intermediate.choose_allergies()
 
     # while True:
     #     health_pulse.display_menu()
