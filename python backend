@@ -1,6 +1,6 @@
 import math
 import re
-#hello #
+
 class HealthPulse:
     def __init__(self):
         self.name = ""
