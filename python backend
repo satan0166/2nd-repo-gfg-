@@ -84,31 +84,7 @@ class HealthPulse:
         except FileNotFoundError:
             return False
 
-    # def save_user_data(self):
-    #     try:
-    #         with open("user_data.txt", "w") as out_file:
-    #             out_file.write(f"{self.name}\n")
-    #             out_file.write(f"{self.age}\n")
-    #             out_file.write(f"{self.bodyweight}\n")
-    #             out_file.write(f"{self.height}\n")
-    #             out_file.write(f"{self.targetWeight}\n")
-    #             out_file.write(f"{self.dailyCalorieIntake}\n")
-    #             out_file.write(f"{self.dailyCaloriesBurned}\n")
-    #             out_file.write(f"{self.netCalorieIntake}\n")
-    #             out_file.write(f"{self.bmiCategory}\n")
-    #             out_file.write(f"{self.workedOut}\n")
-
-    #             out_file.write(f"{len(self.dietPlan)}\n")
-    #             for plan in self.dietPlan:
-    #                 out_file.write(f"{plan}\n")
-
-    #             out_file.write(f"{len(self.workoutPlan)}\n")
-    #             for plan in self.workoutPlan:
-    #                 out_file.write(f"{plan}\n")
-
-    #     except IOError:
-    #         print("Unable to save user data to file.")
-
+  
     def load_user_data(self):
         try:
             with open("user_data.txt", "r") as in_file:
@@ -132,6 +108,17 @@ class HealthPulse:
       print("Embark on a journey to better health and well-being.")
       print("Let's get started on your personalized health and fitness plan.")
       self.name = input("Please enter your name: ")
+
+    def suggest_water_intake(self):
+      if self.bmiCategory is None:
+          print("Calculate BMI first to get accurate water intake suggestions.")
+          return
+
+      weight_kg = float(input("Enter your body weight in kilograms: "))
+      daily_water_intake = round(weight_kg * 0.03, 2)
+
+      print("\nHydration Recommendation:")
+      print("Drink at least {} liters of water daily.".format(daily_water_intake))
 
 class dietPlan_Beginner_Intermediate:  
     def choose_fitness_level(self):
@@ -524,6 +511,18 @@ class dietPlan_Beginner_Intermediate:
           print("Invalid choice. Please choose a valid option.") 
 
 
+    def suggest_water_intake(self):
+      if self.bmiCategory is None:
+          print("Calculate BMI first to get accurate water intake suggestions.")
+          return
+
+      weight_kg = float(input("Enter your body weight in kilograms: "))
+      daily_water_intake = round(weight_kg * 0.03, 2)
+
+      print("\nHydration Recommendation:")
+      print("Drink at least {} liters of water daily.".format(daily_water_intake))
+
+
   
 
 # not done yet
@@ -549,6 +548,7 @@ class dietPlan_Beginner_Intermediate:
     #             print(f" in approximately {estimated_weeks} weeks.")
     #         print()
 # needs to be done
+  
     # def provide_calorie_recommendation(self):
     #     calorie_deficit_threshold = 500.0
     #     calorie_deficit = (self.targetWeight - self.BodyWeight) * 7700.0 / 1000.0
@@ -781,6 +781,7 @@ def main():
     dietplan_beginner_intermediate.choose_fitness_level() 
     dietplan_beginner_intermediate.calculate_bmi()
     dietplan_beginner_intermediate.suggest_diet_plan()
+    health_pulse.suggest_water_intake()
 
     # while True:
     #     health_pulse.display_menu()
