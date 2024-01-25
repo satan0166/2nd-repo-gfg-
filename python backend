@@ -1,5 +1,7 @@
-import math
 import re
+
+import openai
+
 
 class HealthPulse:
     def __init__(self):
@@ -18,10 +20,42 @@ class HealthPulse:
         self.foodCalories = {}
         self.username = ""
         self.password = ""
-
+        self.dietPlan = []  # Placeholder for diet plan
+        self.workoutPlan = []  # Placeholder for workout plan
         # self.initialize_food_calories()
         # self.estimate_time_to_target_weight()
+        pass
+    
+    openai.api_key = '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'
+    
 
+    def chat_with_gpt(self, prompt):
+        response = openai.Completion.create(
+        engine="gpt-3.5-turbo",
+        prompt="You: Hello\nAI: Hi there!",
+        max_tokens=100
+        )
+        message = response.choices[0].text.strip()
+        return message
+    
+    health_pulse = HealthPulse()
+
+      
+    
+    user_input = input("You: ")
+    chatgpt_response = health_pulse.chat_with_gpt(user_input)
+    print(f"ChatGPT: {chatgpt_response}")
+    
+      
+    def view_diet_plan(self):
+        print("\nDiet Plan:")
+        for plan in self.dietPlan:
+            print(plan)
+
+    def view_workout_plan(self):
+        print("\nWorkout Plan:")
+        for plan in self.workoutPlan:
+            print(plan)
     def is_username_exists(self, username):
         try:
             with open("credentials.txt", "r") as credentials_file:
@@ -32,6 +66,23 @@ class HealthPulse:
         except FileNotFoundError:
             return False
 
+    def calculate_calories_burned(self, exercise_type, exercise_duration):
+        # Caloric values are estimated for 30 minutes of activity
+        calories_burned_per_minute = {
+            "Running": 11.4,
+            "Cycling": 6.0,
+            "Swimming": 7.6,
+            "Jump Rope": 12.0,
+            "Yoga": 2.5,
+            "Weightlifting": 3.0,
+            "HIIT": 8.0
+        }
+
+        if exercise_type in calories_burned_per_minute:
+            return exercise_duration * (calories_burned_per_minute[exercise_type] / 30.0)
+        else:
+            print(f"Sorry, we don't have caloric information for {exercise_type}.")
+            return 0.0    
     def save_credentials(self, username, password):
         try:
             with open("credentials.txt", "a") as credentials_file:
@@ -762,18 +813,20 @@ class dietPlan_Beginner_Intermediate:
 
 def main():
     health_pulse = HealthPulse()
-    dietplan_beginner_intermediate = dietPlan_Beginner_Intermediate()
+    #dietplan_beginner_intermediate = DietPlanBeginnerIntermediate()
     print("\nWelcome to HealthPulse!")
+
     while True:
-      print("1. Sign In")
-      print("2. Sign Up")
-      print("3. Exit")
+        print("1. Sign In")
+        print("2. Sign Up")
+        print("3. Talk to ChatGPT")
+        print("4. Exit")
 
-      try:
-          choice = int(input("Enter your choice (1-3): "))
+        try:
+            choice = int(input("Enter your choice (1-4): "))
 
-          if choice == 1:
-              # Sign In
+            if choice == 1:
+ # Sign In
               login_attempt = 0
               while login_attempt < 3:
                   if health_pulse.login():
@@ -793,39 +846,34 @@ def main():
                       print(f"\nWelcome back, {health_pulse.name}!")
                       break  # Exit the loop and proceed to the main menu
 
-          elif choice == 2:
-              # Sign Up
+
+            elif choice == 2:
+                # Sign Up
               health_pulse.welcome_message()
               health_pulse.register_user()
               health_pulse.load_user_data()
               print(f"\nWelcome, {health_pulse.name}!")
               break  # Exit the loop and proceed to the main menu
 
-          elif choice == 3:
-              print("Exiting HealthPulse.")
-              return
 
-          else:
-              print("Invalid choice. Please enter a number between 1 and 3.")
+            elif choice == 3:
+                # Talk to ChatGPT
+                user_input = input("You: ")
+                chatgpt_response = health_pulse.chat_with_gpt(user_input)
+                print(f"ChatGPT: {chatgpt_response}")
 
-      except ValueError:
-          print("Invalid input. Please enter a number.")
+            elif choice == 4:
+                print("Exiting HealthPulse.")
+                return
 
-    dietplan_beginner_intermediate.choose_fitness_level() 
-    dietplan_beginner_intermediate.calculate_bmi()
-    dietplan_beginner_intermediate.suggest_diet_plan()
-    health_pulse.suggest_water_intake()
-    dietplan_beginner_intermediate.choose_allergies()
+            else:
+                print("Invalid choice. Please enter a number between 1 and 4.")
 
-    # while True:
-    #     health_pulse.display_menu()
-    #     try:
-    #         user_option = int(input("Enter your choice (1-8): "))
-    #         health_pulse.execute_menu_option(user_option)
-    #     except ValueError:
-    #         print("Invalid input. Please enter a number.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+   
+
 
 
 if __name__ == "__main__":
     main()
-
