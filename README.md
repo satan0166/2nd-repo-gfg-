@@ -23,7 +23,7 @@ HealthPulse is a comprehensive health and fitness application designed to empowe
                                    high proteintailored, etc for advanced fitness levels.
 - **Fitness Tracking**: Monitor and analyze your fitness progress over time.
 
-###**Usage Guidelines**:
+**Usage Guidelines**:
 - User Registration and Login: If you're a new user, register by selecting "Sign Up" from the main menu and follow the prompts. If you're a returning user, select "Sign In" and enter your credentials.
 - BMI Calculation: Enter your height and weight when prompted to calculate your BMI.
 - Fitness Level Selection: Choose your fitness level from the provided options (Beginner, Intermediate, Advanced).
