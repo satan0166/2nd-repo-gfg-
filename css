@@ -1,0 +1,26 @@
+<!-- templates/dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Health Pulse Dashboard</title>
+</head>
+<body style="background-image: url('{{ url_for('static', filename='fitness_background.jpg') }}'); background-size: cover;">
+
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to Your Health Dashboard</h1>
+        </div>
+        <div class="content">
+            <!-- Your dashboard content here -->
+            <p>Hello, [Username]! Here's your health and fitness data:</p>
+            <!-- Add more content specific to the dashboard -->
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
