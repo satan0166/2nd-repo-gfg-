@@ -19,8 +19,7 @@ HealthPulse is a comprehensive health and fitness application designed to empowe
 - **Daily Workout Charts**: Track and visualize your daily workout progress.
 - **Calorie Tracking**: Log food intake and exercise to track daily calorie consumption and expenditure.
 - **Chatbot**: Interact with a chatbot for user inputs, assistance, and personalized recommendations.
-- **Advanced Fitness Diet Plans**: Explore a wider range of diet options such as keto,volumetrix, 
-                                   high proteintailored, etc for advanced fitness levels.
+- **Advanced Fitness Diet Plans**: Explore a wider range of diet options such as keto, volumetrix, high proteintailored, etc for advanced fitness levels.
 - **Fitness Tracking**: Monitor and analyze your fitness progress over time.
 
 **Usage Guidelines**:
