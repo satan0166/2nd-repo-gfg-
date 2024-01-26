@@ -231,7 +231,7 @@ class dietPlan_Beginner_Intermediate(HealthPulse):
         print("Category: {}".format(self.bmiCategory))
 
     def suggest_diet_plan(self):
-      print("\nDiet Plan Suggestions based on BMI: Please note that these are just examples, and actual dietary recommendations should be personalized and consulted with a healthcare professional or a nutritionist.")
+      
       if self.bmiCategory == "Underweight":
           self.suggest_underweight_diet_plan()
       elif self.bmiCategory == "Normal weight":
@@ -361,7 +361,7 @@ class dietPlan_Beginner_Intermediate(HealthPulse):
 
 
     def normal_weight_diet2(self):  
-      print("Choose your diet plan category:")
+      print("Choose your diet plan category: ")
       print("1. Vegan")
       print("2. Vegetarian")
       print("3. Non-Vegetarian")
