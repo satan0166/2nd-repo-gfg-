@@ -1,0 +1,235 @@
+import re
+from flask import Flask, render_template, request, redirect, url_for, session
+import openai
+
+app = Flask(__name__)
+openai.api_key = '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'
+@app.route('/')
+class HealthPulse:
+    def __init__(self):
+        self.name = ""
+        self.age = 0
+        self.BodyWeight = 0.0
+        self.height = 0.0
+        self.targetWeight = 0.0
+        self.dailyCalorieIntake = 0.0
+        self.dailyCaloriesBurned = 0.0
+        self.netCalorieIntake = 0.0
+        self.bmiCategory = ""
+        self.dietPlan = []
+        self.workoutPlan = []
+        self.workedOut = False
+        self.foodCalories = {}
+        self.username = ""
+        self.password = ""
+
+    openai.api_key = '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'
+
+
+    def view_diet_plan(self):
+        print("\nDiet Plan:")
+        for plan in self.dietPlan:
+            print(plan)
+
+    def view_workout_plan(self):
+        print("\nWorkout Plan:")
+        for plan in self.workoutPlan:
+            print(plan)
+
+    def is_username_exists(self, username):
+        try:
+            with open("credentials.txt", "r") as credentials_file:
+                for line in credentials_file:
+                    stored_username, _ = line.strip().split(" ", 1)
+                    if stored_username == username:
+                        return True
+        except FileNotFoundError:
+            return False
+    def chat_with_gpt(self, prompt):
+        response = openai.Completion.create(
+            engine="gpt-3.5-turbo",
+            prompt=prompt,
+            max_tokens=100
+        )
+        return response.choices[0].text  # return the value of the 'text' key
+
+health_pulse = HealthPulse()
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_input = request.form['user_input']
+    chatgpt_response = health_pulse.chat_with_gpt(user_input)
+    return render_template('index.html', user_input=user_input, chatgpt_response=chatgpt_response)
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
+    def calculate_calories_burned(self, exercise_type, exercise_duration):
+        calories_burned_per_minute = {
+            "Running": 11.4,
+            "Cycling": 6.0,
+            "Swimming": 7.6,
+            "Jump Rope": 12.0,
+            "Yoga": 2.5,
+            "Weightlifting": 3.0,
+            "HIIT": 8.0
+        }
+
+        if exercise_type in calories_burned_per_minute:
+            return exercise_duration * (calories_burned_per_minute[exercise_type] / 30.0)
+        else:
+            print(f"Sorry, we don't have caloric information for {exercise_type}.")
+            return 0.0
+
+    def save_credentials(self, username, password):
+        try:
+            with open("credentials.txt", "a") as credentials_file:
+                credentials_file.write(f"{username} {password}\n")
+        except IOError:
+            print("Unable to save user credentials.")
+
+    def register_user(self):
+        print("Register a new user:")
+        new_username = input("Create a username: ")
+
+        if self.is_username_exists(new_username):
+            print("Username already exists. Please choose a different username.")
+            self.register_user()
+            return
+
+        while True:
+            new_password = input("Create a password: Make sure it contains at least one capital letter, one special character, one number, and has a minimum length of 8 characters.")
+
+            if not self.is_valid_password(new_password):
+                print("Invalid password. Make sure it contains at least one capital letter, one special character, one number, and has a minimum length of 8 characters.")
+                continue
+
+            confirm_password = input("Confirm your password: ")
+
+            if new_password == confirm_password:
+                break
+            else:
+                print("Passwords do not match. Please try again.")
+
+        self.save_credentials(new_username, new_password)
+
+    def is_valid_password(self, password):
+        return re.search(r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{8,}$', password) is not None
+
+    def login(self):
+        print("Login to HealthPulse:")
+        self.username = input("Enter your username: ")
+        self.password = input("Enter your password: ")
+        return self.validate_credentials(self.username, self.password)
+
+    def validate_credentials(self, username, password):
+        try:
+            with open("credentials.txt", "r") as credentials_file:
+                for line in credentials_file:
+                    stored_username, stored_password = line.strip().split(" ", 1)
+                    if stored_username == username and stored_password == password:
+                        return True
+        except FileNotFoundError:
+            return False
+
+    def load_user_data(self):
+        try:
+            with open("user_data.txt", "r") as in_file:
+                self.name = in_file.readline().strip()
+                # Load other user data attributes
+        except FileNotFoundError:
+            print("No saved user data found. Starting fresh.")
+
+    def welcome_message(self):
+        print("Welcome to HealthPulse!")
+        print("Embark on a journey to better health and well-being.")
+        print("Let's get started on your personalized health and fitness plan.")
+        self.name = input("Please enter your name: ")
+
+    def suggest_water_intake(self):
+        if self.bmiCategory is None:
+            print("Calculate BMI first to get accurate water intake suggestions.")
+            return
+
+        weight_kg = float(input("Enter your body weight in kilograms: "))
+        daily_water_intake = round(weight_kg * 0.03, 2)
+
+        print("\nHydration Recommendation:")
+        print(f"Drink at least {daily_water_intake} liters of water daily.")
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        if health_pulse.validate_credentials(username, password):
+            session['username'] = username
+            return redirect(url_for('dashboard'))
+
+    return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        if health_pulse.is_username_exists(username):
+            return render_template('register.html', error='Username already exists.')
+
+        if not health_pulse.is_valid_password(password):
+            return render_template('register.html', error='Invalid password.')
+
+        health_pulse.save_credentials(username, password)
+
+        return redirect(url_for('dashboard'))
+
+    return render_template('register.html')
+
+@app.route('/dashboard')
+def dashboard():
+    if 'username' not in session:
+        return redirect(url_for('index'))
+
+    username = session['username']
+    health_pulse = load_user_data(username)
+
+    return render_template('dashboard.html', health_pulse=health_pulse)
+
+
+if __name__ == "__main__":
+    health_pulse = HealthPulse()
+    health_pulse.welcome_message()
+
+    while True:
+        print("\n1. Login\n2. Register\n3. Quit")
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            if health_pulse.login():
+                print(f"Welcome back, {health_pulse.name}!")
+                break
+            else:
+                print("Invalid credentials. Please try again.")
+        elif choice == '2':
+            health_pulse.register_user()
+            break
+        elif choice == '3':
+            print("Exiting HealthPulse. Goodbye!")
+            exit()
+        else:
+            print("Invalid choice. Please choose again.")
+
+    health_pulse.load_user_data()
+    health_pulse.suggest_water_intake()
+
+    app.run(debug=True)
