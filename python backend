@@ -1,7 +1,6 @@
+import math
+import random 
 import re
-
-import openai
-
 
 class HealthPulse:
     def __init__(self):
@@ -20,42 +19,20 @@ class HealthPulse:
         self.foodCalories = {}
         self.username = ""
         self.password = ""
-        self.dietPlan = []  # Placeholder for diet plan
-        self.workoutPlan = []  # Placeholder for workout plan
+        self.weekly_activities = {
+          'Monday': ['Hiking', 'Cycling', 'Yoga'],
+          'Tuesday': ['Swimming', 'Dancing', 'Gardening'],
+          'Wednesday': ['Jogging', 'Pilates', 'Rock Climbing'],
+          'Thursday': ['Kayaking', 'Zumba', 'Meditation'],
+          'Friday': ['Biking', 'Tai Chi', 'Photography Walk'],
+          'Saturday': ['Skiing', 'Golf', 'Nature Walk'],
+          'Sunday': ['Rowing', 'Salsa Dancing', 'Picnic']
+        }
+      
+
         # self.initialize_food_calories()
         # self.estimate_time_to_target_weight()
-        pass
-    
-    openai.api_key = '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'
-    
 
-    def chat_with_gpt(self, prompt):
-        response = openai.Completion.create(
-        engine="gpt-3.5-turbo",
-        prompt="You: Hello\nAI: Hi there!",
-        max_tokens=100
-        )
-        message = response.choices[0].text.strip()
-        return message
-    
-    health_pulse = HealthPulse()
-
-      
-    
-    user_input = input("You: ")
-    chatgpt_response = health_pulse.chat_with_gpt(user_input)
-    print(f"ChatGPT: {chatgpt_response}")
-    
-      
-    def view_diet_plan(self):
-        print("\nDiet Plan:")
-        for plan in self.dietPlan:
-            print(plan)
-
-    def view_workout_plan(self):
-        print("\nWorkout Plan:")
-        for plan in self.workoutPlan:
-            print(plan)
     def is_username_exists(self, username):
         try:
             with open("credentials.txt", "r") as credentials_file:
@@ -66,23 +43,6 @@ class HealthPulse:
         except FileNotFoundError:
             return False
 
-    def calculate_calories_burned(self, exercise_type, exercise_duration):
-        # Caloric values are estimated for 30 minutes of activity
-        calories_burned_per_minute = {
-            "Running": 11.4,
-            "Cycling": 6.0,
-            "Swimming": 7.6,
-            "Jump Rope": 12.0,
-            "Yoga": 2.5,
-            "Weightlifting": 3.0,
-            "HIIT": 8.0
-        }
-
-        if exercise_type in calories_burned_per_minute:
-            return exercise_duration * (calories_burned_per_minute[exercise_type] / 30.0)
-        else:
-            print(f"Sorry, we don't have caloric information for {exercise_type}.")
-            return 0.0    
     def save_credentials(self, username, password):
         try:
             with open("credentials.txt", "a") as credentials_file:
@@ -170,6 +130,27 @@ class HealthPulse:
 
       print("\nHydration Recommendation:")
       print("Drink at least {} liters of water daily.".format(daily_water_intake))
+
+  #Weekly recreation activity suggester 
+    def suggest_weekly_activities(self):
+      print("\nWeekly Recreational Workout Suggestions:")
+      for day, activities in self.weekly_activities.items():
+        activity = random.choice(activities)
+        duration = random.randint(30, 60)  # Random duration between 30 to 60 minutes
+        intensity = random.choice(['Low', 'Moderate', 'High'])
+        calories_burned = self.calculate_calories_burned(intensity, duration)
+
+        print(f"{day}: {activity}")
+        print(f"   Duration: {duration} minutes")
+        print(f"   Intensity: {intensity}")
+        print(f"   Estimated Calories Burned: {calories_burned} kcal")
+        break  # To suggest only one activity per week
+
+    def calculate_calories_burned(self, intensity, duration):
+    # Placeholder function for estimating calories burned based on intensity and duration
+      intensity_multiplier = {'Low': 3, 'Moderate': 5, 'High': 8}
+      return intensity_multiplier[intensity] * duration
+
 
 class dietPlan_Beginner_Intermediate:  
     def choose_fitness_level(self):
@@ -604,10 +585,9 @@ class dietPlan_Beginner_Intermediate:
 
       # elif "Eggs" in selected_allergies:
       #     print("Avoid eggs. Consider alternatives like chicken or tofu.")
-          
+         
 
 
-  
 
 # not done yet
     # def estimate_time_to_target_weight(self):
@@ -680,52 +660,7 @@ class dietPlan_Beginner_Intermediate:
     #             print("Your daily calorie intake is within a healthy range for maintaining your current weight. "
     #                   "Keep up the good work!")
 
-    # def initialize_food_calories(self):
-    #     # Caloric values are for 100g servings
-    #     self.foodCalories = {
-    #       "Apple": 52.0,
-    #       "Banana": 89.0,
-    #       "Orange": 43.0,
-    #       "Chicken Breast": 165.0,
-    #       "Salmon": 206.0,
-    #       "Broccoli": 55.0,
-    #       "Carrot": 41.0,
-    #       "Potato": 77.0,
-    #       "Brown Rice": 123.0,
-    #       "Quinoa": 120.0,
-    #       "Egg": 143.0,
-    #       "Milk": 42.0,
-    #       "Almonds": 576.0,
-    #       "Avocado": 160.0,
-    #       "Olive Oil": 884.0,
-    #       "Yogurt": 59.0,
-    #       "Cheese": 402.0,
-    #       "Bread": 265.0,
-    #       "Pasta": 131.0,
-    #       "Chocolate": 546.0,
-    #       "Ice Cream": 207.0,
-    #       "Soda": 41.0,
-    #       "Coffee": 2.0,
-    #       "Tea": 1.0,
-    #       "Water": 0.0,
-    #       "Spinach": 23.0,
-    #       "Tomato": 18.0,
-    #       "Cucumber": 16.0,
-    #       "Strawberries": 32.0,
-    #       "Blueberries": 57.0,
-    #       "Ground Beef": 250.0,
-    #       "Shrimp": 99.0,
-    #       "Sweet Potato": 86.0,
-    #       "Lentils": 116.0,
-    #       "Peanut Butter": 588.0,
-    #       "Honey": 304.0,
-    #       "Quinoa": 120.0,
-    #       "Greek Yogurt": 59.0,
-    #       "Chia Seeds": 486.0,
-    #       "Dark Chocolate": 546.0,
-    #       "Green Tea": 1.0,
-    #       "Coconut Water": 19.0
-    #     }
+  
 # will complete soon 
     def log_food_intake(self):
         print("\nFood Log:")
@@ -813,20 +748,18 @@ class dietPlan_Beginner_Intermediate:
 
 def main():
     health_pulse = HealthPulse()
-    #dietplan_beginner_intermediate = DietPlanBeginnerIntermediate()
+    dietplan_beginner_intermediate = dietPlan_Beginner_Intermediate()
     print("\nWelcome to HealthPulse!")
-
     while True:
-        print("1. Sign In")
-        print("2. Sign Up")
-        print("3. Talk to ChatGPT")
-        print("4. Exit")
+      print("1. Sign In")
+      print("2. Sign Up")
+      print("3. Exit")
 
-        try:
-            choice = int(input("Enter your choice (1-4): "))
+      try:
+          choice = int(input("Enter your choice (1-3): "))
 
-            if choice == 1:
- # Sign In
+          if choice == 1:
+              # Sign In
               login_attempt = 0
               while login_attempt < 3:
                   if health_pulse.login():
@@ -846,34 +779,39 @@ def main():
                       print(f"\nWelcome back, {health_pulse.name}!")
                       break  # Exit the loop and proceed to the main menu
 
-
-            elif choice == 2:
-                # Sign Up
+          elif choice == 2:
+              # Sign Up
               health_pulse.welcome_message()
               health_pulse.register_user()
               health_pulse.load_user_data()
               print(f"\nWelcome, {health_pulse.name}!")
               break  # Exit the loop and proceed to the main menu
 
+          elif choice == 3:
+              print("Exiting HealthPulse.")
+              return
 
-            elif choice == 3:
-                # Talk to ChatGPT
-                user_input = input("You: ")
-                chatgpt_response = health_pulse.chat_with_gpt(user_input)
-                print(f"ChatGPT: {chatgpt_response}")
+          else:
+              print("Invalid choice. Please enter a number between 1 and 3.")
 
-            elif choice == 4:
-                print("Exiting HealthPulse.")
-                return
+      except ValueError:
+          print("Invalid input. Please enter a number.")
 
-            else:
-                print("Invalid choice. Please enter a number between 1 and 4.")
+    dietplan_beginner_intermediate.choose_fitness_level() 
+    dietplan_beginner_intermediate.calculate_bmi()
+    dietplan_beginner_intermediate.suggest_diet_plan()
+    health_pulse.suggest_water_intake()
+    dietplan_beginner_intermediate.choose_allergies()
 
-        except ValueError:
-            print("Invalid input. Please enter a number.")
-   
-
+    # while True:
+    #     health_pulse.display_menu()
+    #     try:
+    #         user_option = int(input("Enter your choice (1-8): "))
+    #         health_pulse.execute_menu_option(user_option)
+    #     except ValueError:
+    #         print("Invalid input. Please enter a number.")
 
 
 if __name__ == "__main__":
     main()
+
