@@ -58,11 +58,11 @@ class HealthPulse:
 
       while True:
           new_password = input("Create a password: Make sure it contains at least one capital letter, one special character, one number, and has a minimum length of 8 characters. ")
-        
+
           if not self.is_valid_password(new_password):
             print("Invalid password. Make sure it contains at least one capital letter, one special character, one number, and has a minimum length of 8 characters.")
             continue
-        
+
           confirm_password = input("Confirm your password: ")
 
           if new_password == confirm_password:
@@ -71,7 +71,7 @@ class HealthPulse:
               print("Passwords do not match. Please try again.")
 
       self.save_credentials(new_username, new_password)
-      
+
     def is_valid_password(self, password):
       return re.search(r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{8,}$', password) is not None
 
@@ -91,7 +91,7 @@ class HealthPulse:
         except FileNotFoundError:
             return False
 
-  
+
     def load_user_data(self):
         try:
             with open("user_data.txt", "r") as in_file:
@@ -151,7 +151,7 @@ class HealthPulse:
 class dietPlan_Beginner_Intermediate(HealthPulse):  
     def __init__(self):
       super().__init__()
-      
+
     def choose_fitness_level(self):
       Attempt=0
       while Attempt<3:
@@ -193,7 +193,7 @@ class dietPlan_Beginner_Intermediate(HealthPulse):
 
         # Set reasonable ranges for height and weight
         MIN_HEIGHT = 0.5  # meters
-        MAX_HEIGHT = 1.7  # meters
+        MAX_HEIGHT = 2.5  # meters
         MIN_WEIGHT = 20.0  # kilograms
         MAX_WEIGHT = 500.0  # kilograms
 
@@ -204,7 +204,7 @@ class dietPlan_Beginner_Intermediate(HealthPulse):
                 break
             else:
                 print(f"Invalid height. Please enter a height between {MIN_HEIGHT} and {MAX_HEIGHT} meters.")
-                self.height = float(input("Enter your height in meters: "))
+                
 
         # Get user input for weight
         while True:
@@ -213,7 +213,7 @@ class dietPlan_Beginner_Intermediate(HealthPulse):
                 break
             else:
                 print(f"Invalid weight. Please enter a weight between {MIN_WEIGHT} and {MAX_WEIGHT} kilograms.")
-                self.BodyWeight = float(input("Enter your weight in kilograms: "))
+                
 
         bmi = self.BodyWeight / (self.height ** 2)
 
@@ -227,11 +227,11 @@ class dietPlan_Beginner_Intermediate(HealthPulse):
             self.bmiCategory = "Obese"
 
         print("\nBody Mass Index (BMI) Calculation:")
-        print("BMI: {:.2f}".format(bmi))
-        print("Category: {}".format(self.bmiCategory))
+        # print("BMI: {:.2f}".format(bmi))
+        # print("Category: {}".format(self.bmiCategory))
 
     def suggest_diet_plan(self):
-      
+
       if self.bmiCategory == "Underweight":
           self.suggest_underweight_diet_plan()
       elif self.bmiCategory == "Normal weight":
@@ -254,7 +254,7 @@ class dietPlan_Beginner_Intermediate(HealthPulse):
       self.over_weight_diet3()
 
     def suggest_obese_diet_plan(self):
-      print("Kindly consult to a healthcare professional for a personalized diet plan.")
+      print("You are in the obese category. 😊Kindly consult to a healthcare professional for a personalized diet plan.")
 
 
     def Underweight_diet_plan_preference(self):
@@ -606,7 +606,7 @@ class dietPlan_Beginner_Intermediate(HealthPulse):
 
       # elif "Eggs" in selected_allergies:
       #     print("Avoid eggs. Consider alternatives like chicken or tofu.")
-         
+
 class dietPlan_Advance(dietPlan_Beginner_Intermediate):
   def __init__(self):
    super().__init__() 
