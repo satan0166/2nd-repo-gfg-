@@ -28,10 +28,6 @@ class HealthPulse:
           'Saturday': ['Skiing', 'Golf', 'Nature Walk'],
           'Sunday': ['Rowing', 'Salsa Dancing', 'Picnic']
         }
-      
-
-        # self.initialize_food_calories()
-        # self.estimate_time_to_target_weight()
 
     def is_username_exists(self, username):
         try:
@@ -152,7 +148,10 @@ class HealthPulse:
       return intensity_multiplier[intensity] * duration
 
 
-class dietPlan_Beginner_Intermediate:  
+class dietPlan_Beginner_Intermediate(HealthPulse):  
+    def __init__(self):
+      super().__init__()
+      
     def choose_fitness_level(self):
       Attempt=0
       while Attempt<3:
@@ -586,165 +585,12 @@ class dietPlan_Beginner_Intermediate:
       # elif "Eggs" in selected_allergies:
       #     print("Avoid eggs. Consider alternatives like chicken or tofu.")
          
+class dietPlan_Advance(dietPlan_Beginner_Intermediate):
+  def __init__(self):
+   super().__init__() 
 
 
 
-# not done yet
-    # def estimate_time_to_target_weight(self):
-    #     calories_per_kg = 7700.0
-    #     weight_change_calories = abs(self.targetWeight - self.BodyWeight) * calories_per_kg
-
-    #     if self.netCalorieIntake != 0:
-    #         estimated_days = weight_change_calories / abs(self.netCalorieIntake)
-
-    #         print("\nEstimated time to achieve target weight: ", end="")
-    #         if self.netCalorieIntake > 0:
-    #             print("Losing ", end="")
-    #         else:
-    #             print("Gaining ", end="")
-
-    #         print(f"{abs(self.targetWeight - self.BodyWeight)} kg", end="")
-
-    #         if estimated_days < 7:
-    #             print(" in less than a week.")
-    #         else:
-    #             estimated_weeks = int(estimated_days / 7)
-    #             print(f" in approximately {estimated_weeks} weeks.")
-    #         print()
-# needs to be done
-  
-    # def provide_calorie_recommendation(self):
-    #     calorie_deficit_threshold = 500.0
-    #     calorie_deficit = (self.targetWeight - self.BodyWeight) * 7700.0 / 1000.0
-
-    #     if self.targetWeight < self.BodyWeight:
-    #         # User wants to lose weight
-    #         lower_threshold = calorie_deficit - calorie_deficit_threshold
-    #         upper_threshold = calorie_deficit + calorie_deficit_threshold
-
-    #         if self.netCalorieIntake < lower_threshold:
-    #             print("Your current daily calorie intake may be too low for a healthy weight loss. "
-    #                   "Consider increasing your calorie intake.")
-    #         elif self.netCalorieIntake > upper_threshold:
-    #             print("Your current daily calorie intake may be too high for a healthy weight loss. "
-    #                   "Consider reducing your calorie intake.")
-    #         else:
-    #             print("Your daily calorie intake is within a healthy range for your weight loss goal. "
-    #                   "Keep up the good work!")
-    #     elif self.targetWeight > self.BodyWeight:
-    #         # User wants to gain weight
-    #         lower_threshold = calorie_deficit - calorie_deficit_threshold
-    #         upper_threshold = calorie_deficit + calorie_deficit_threshold
-
-    #         if self.netCalorieIntake < lower_threshold:
-    #             print("Your current daily calorie intake may be too low for a healthy weight gain. "
-    #                   "Consider increasing your calorie intake.")
-    #         elif self.netCalorieIntake > upper_threshold:
-    #             print("Your current daily calorie intake may be too high for a healthy weight gain. "
-    #                   "Consider reducing your calorie intake.")
-    #         else:
-    #             print("Your daily calorie intake is within a healthy range for your weight gain goal. "
-    #                   "Keep up the good work!")
-    #     else:
-    #         # User wants to maintain current weight
-    #         lower_threshold = calorie_deficit - calorie_deficit_threshold
-    #         upper_threshold = calorie_deficit + calorie_deficit_threshold
-
-    #         if self.netCalorieIntake < lower_threshold:
-    #             print("Your current daily calorie intake may be too low for maintaining your weight. "
-    #                   "Consider increasing your calorie intake.")
-    #         elif self.netCalorieIntake > upper_threshold:
-    #             print("Your current daily calorie intake may be too high for maintaining your weight. "
-    #                   "Consider reducing your calorie intake.")
-    #         else:
-    #             print("Your daily calorie intake is within a healthy range for maintaining your current weight. "
-    #                   "Keep up the good work!")
-
-  
-# will complete soon 
-    def log_food_intake(self):
-        print("\nFood Log:")
-        food_item = input("Enter the name of the food item you consumed: ")
-
-        if food_item in self.foodCalories:
-            serving_size = float(input(f"Enter the serving size in grams for {food_item}: "))
-            calories_consumed = (serving_size / 100.0) * self.foodCalories[food_item]
-            self.netCalorieIntake += calories_consumed
-            print(f"You consumed {calories_consumed:.2f} calories from {food_item}.")
-        else:
-            print(f"Sorry, we don't have caloric information for {food_item}.")
-
-    def log_exercise(self):
-        print("\nExercise Log:")
-        exercise_type = input("Enter the type of exercise you performed: ")
-        exercise_duration = float(input("Enter the duration of the exercise in minutes: "))
-
-        calories_burned = self.calculate_calories_burned(exercise_type, exercise_duration)
-        self.netCalorieIntake -= calories_burned
-
-        print(f"You burned {calories_burned:.2f} calories with {exercise_type}.")
-
-    def calculate_calories_burned(self, exercise_type, exercise_duration):
-        # Caloric values are estimated for 30 minutes of activity
-        calories_burned_per_minute = {
-            "Running": 11.4,
-            "Cycling": 6.0,
-            "Swimming": 7.6,
-            "Jump Rope": 12.0,
-            "Yoga": 2.5,
-            "Weightlifting": 3.0,
-            "HIIT": 8.0
-        }
-
-        if exercise_type in calories_burned_per_minute:
-            return exercise_duration * (calories_burned_per_minute[exercise_type] / 30.0)
-        else:
-            print(f"Sorry, we don't have caloric information for {exercise_type}.")
-            return 0.0
-
-    # def display_menu(self):
-    #     print("\nHealthPulse Menu:")
-    #     print("1. Log Food Intake")
-    #     print("2. Log Exercise")
-    #     print("3. View BMI and Weight Status")
-    #     print("4. View Caloric Recommendation")
-    #     print("5. View Estimated Time to Target Weight")
-    #     print("6. View Diet Plan")
-    #     print("7. View Workout Plan")
-    #     print("8. Save and Exit")
-
-    # def execute_menu_option(self, option):
-    #     if option == 1:
-    #         self.log_food_intake()
-    #     elif option == 2:
-    #         self.log_exercise()
-    #     elif option == 3:
-    #         self.calculate_bmi()
-    #     elif option == 4:
-    #         self.provide_calorie_recommendation()
-    #     elif option == 5:
-    #         self.estimate_time_to_target_weight()
-    #     elif option == 6:
-    #         self.view_diet_plan()
-    #     elif option == 7:
-    #         self.view_workout_plan()
-    #     elif option == 8:
-    #         self.save_user_data()
-    #         print("Data saved. Exiting HealthPulse.")
-    #         exit()
-    #     else:
-    #         print("Invalid option. Please choose a valid option.")
-
-  # will be done 
-    def view_diet_plan(self):
-        print("\nDiet Plan:")
-        for plan in self.dietPlan:
-            print(plan)
-
-    def view_workout_plan(self):
-        print("\nWorkout Plan:")
-        for plan in self.workoutPlan:
-            print(plan)
 
 def main():
     health_pulse = HealthPulse()
@@ -802,14 +648,8 @@ def main():
     dietplan_beginner_intermediate.suggest_diet_plan()
     health_pulse.suggest_water_intake()
     dietplan_beginner_intermediate.choose_allergies()
+    health_pulse.suggest_weekly_activities()
 
-    # while True:
-    #     health_pulse.display_menu()
-    #     try:
-    #         user_option = int(input("Enter your choice (1-8): "))
-    #         health_pulse.execute_menu_option(user_option)
-    #     except ValueError:
-    #         print("Invalid input. Please enter a number.")
 
 
 if __name__ == "__main__":
