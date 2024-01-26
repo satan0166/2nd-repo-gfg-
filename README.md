@@ -1,10 +1,10 @@
 HealthPulse
 
-##**Overview**
+**Overview**
 
 HealthPulse is a comprehensive health and fitness management tool built with Python. It provides users with a personalized and interactive command-line interface to monitor and improve their well-being. The application incorporates features such as user authentication, personalized diet and workout plans, calorie tracking, BMI calculation, and goal estimation. Whether you're aiming to lose weight, gain muscle, or maintain a healthy lifestyle, HealthPulse is designed to assist you on your fitness journey.
 
-##**Purpose** 
+**Purpose** 
 
 HealthPulse is a comprehensive health and fitness application designed to empower users on their wellness journey. Whether you're just starting or aiming for advanced fitness levels, HealthPulse caters to your unique needs.
 
