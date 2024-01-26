@@ -191,8 +191,29 @@ class dietPlan_Beginner_Intermediate(HealthPulse):
         # BMI formula: weight (kg) / (height (m))^2
         print("\nLet's calculate your Body Mass Index (BMI).")
 
-        self.height=float(input("Enter your height in meters: "))
-        self.BodyWeight=float(input("Enter your weight in kilograms: "))
+        # Set reasonable ranges for height and weight
+        MIN_HEIGHT = 0.5  # meters
+        MAX_HEIGHT = 1.7  # meters
+        MIN_WEIGHT = 20.0  # kilograms
+        MAX_WEIGHT = 500.0  # kilograms
+
+        # Get user input for height
+        while True:
+            self.height = float(input("Enter your height in meters: "))
+            if MIN_HEIGHT <= self.height <= MAX_HEIGHT:
+                break
+            else:
+                print(f"Invalid height. Please enter a height between {MIN_HEIGHT} and {MAX_HEIGHT} meters.")
+                self.height = float(input("Enter your height in meters: "))
+
+        # Get user input for weight
+        while True:
+            self.BodyWeight = float(input("Enter your weight in kilograms: "))
+            if MIN_WEIGHT <= self.BodyWeight <= MAX_WEIGHT:
+                break
+            else:
+                print(f"Invalid weight. Please enter a weight between {MIN_WEIGHT} and {MAX_WEIGHT} kilograms.")
+                self.BodyWeight = float(input("Enter your weight in kilograms: "))
 
         bmi = self.BodyWeight / (self.height ** 2)
 
@@ -336,6 +357,7 @@ class dietPlan_Beginner_Intermediate(HealthPulse):
           non_vegetarian_diet_plan1(self)
       else:
           print("Invalid choice. Please choose a valid option.")
+          self.Underweight_diet_plan_preference()
 
 
     def normal_weight_diet2(self):  
