@@ -1,39 +1,43 @@
 import openai
-import re
-
-class HealthPulse:
-      def __init__(self):
+  import random 
+  import re
+  openai.api_key = "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"
+  
+  class HealthPulse:
+      def _init_(self):
           self.name = ""
           self.age = 0
-          self.body_weight = 0.0
+          self.BodyWeight = 0.0
           self.height = 0.0
-          self.target_weight = 0.0
-          self.daily_calorie_intake = 0.0
-          self.daily_calories_burned = 0.0
-          self.net_calorie_intake = 0.0
-          self.bmi_category = ""
-          self.diet_plan = []
-          self.workout_plan = []
-          self.worked_out = False
-          self.food_calories = {}
+          self.targetWeight = 0.0
+          self.dailyCalorieIntake = 0.0
+          self.dailyCaloriesBurned = 0.0
+          self.netCalorieIntake = 0.0
+          self.bmiCategory = ""
+          self.dietPlan = []
+          self.workoutPlan = []
+          self.workedOut = False
+          self.foodCalories = {}
           self.username = ""
           self.password = ""
-
-          pass
-      
-      
-
-
-        
-      def view_diet_plan(self):
-          print("\nDiet Plan:")
-          for plan in self.dietPlan:
-              print(plan)
-
-      def view_workout_plan(self):
-          print("\nWorkout Plan:")
-          for plan in self.workoutPlan:
-              print(plan)
+          self.weekly_activities = {
+            'Monday': ['Hiking', 'Cycling', 'Yoga'],
+            'Tuesday': ['Swimming', 'Dancing', 'Gardening'],
+            'Wednesday': ['Jogging', 'Pilates', 'Rock Climbing'],
+            'Thursday': ['Kayaking', 'Zumba', 'Meditation'],
+            'Friday': ['Biking', 'Tai Chi', 'Photography Walk'],
+            'Saturday': ['Skiing', 'Golf', 'Nature Walk'],
+            'Sunday': ['Rowing', 'Salsa Dancing', 'Picnic']
+          }
+  
+          def chat_with_gpt(self, prompt):
+          response = openai.Completion.create(
+              engine="text-davinci-003",
+              prompt=prompt,
+              max_tokens=150
+          )
+          return response.choices[0].text.strip()
+  
       def is_username_exists(self, username):
           try:
               with open("credentials.txt", "r") as credentials_file:
@@ -43,65 +47,49 @@ class HealthPulse:
                           return True
           except FileNotFoundError:
               return False
-
-      def calculate_calories_burned(self, exercise_type, exercise_duration):
-          calories_burned_per_minute = {
-              "Running": 11.4,
-              "Cycling": 6.0,
-              "Swimming": 7.6,
-              "Jump Rope": 12.0,
-              "Yoga": 2.5,
-              "Weightlifting": 3.0,
-              "HIIT": 8.0
-          }
-
-          if exercise_type in calories_burned_per_minute:
-              return exercise_duration * (calories_burned_per_minute[exercise_type] / 30.0)
-          else:
-              print(f"Sorry, we don't have caloric information for {exercise_type}.")
-              return 0.0    
+  
       def save_credentials(self, username, password):
           try:
               with open("credentials.txt", "a") as credentials_file:
                   credentials_file.write(f"{username} {password}\n")
           except IOError:
               print("Unable to save user credentials.")
-
+  
       def register_user(self):
-          print("Register a new user:")
-          new_username = input("Create a username: ")
-
-          if self.is_username_exists(new_username):
-              print("Username already exists. Please choose a different username.")
-              self.register_user()
-              return
-
-          while True:
-              new_password = input("Create a password: Make sure it's strong and secure. ")
-              
-              if not self.is_valid_password(new_password):
-                  print("Invalid password. Make sure it's strong and secure.")
-                  continue
-              
-              confirm_password = input("Confirm your password: ")
-
-              if new_password == confirm_password:
-                  break
-              else:
-                  print("Passwords do not match. Please try again.")
-                  self.save_credentials(new_username, new_password)
-
-
+  
+        print("Register a new user:")
+        new_username = input("Create a username: ")
+  
+        if self.is_username_exists(new_username):
+            print("Username already exists. Please choose a different username.")
+            self.register_user()
+            return
+  
+        while True:
+            new_password = input("Create a password: Make sure it contains at least one capital letter, one special character, one number, and has a minimum length of 8 characters. ")
+          
+            if not self.is_valid_password(new_password):
+              print("Invalid password. Make sure it contains at least one capital letter, one special character, one number, and has a minimum length of 8 characters.")
+              continue
+          
+            confirm_password = input("Confirm your password: ")
+  
+            if new_password == confirm_password:
+                break
+            else:
+                print("Passwords do not match. Please try again.")
+  
+        self.save_credentials(new_username, new_password)
         
       def is_valid_password(self, password):
-        return re.search(r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{8,}$', password) is not None
-
+        return re.search(r'^(?=.[A-Z])(?=.[0-9])(?=.[!@#$%^&()-+=])[a-zA-Z0-9!@#$%^&*()-+=]{8,}$', password) is not None
+  
       def login(self):
           print("Login to HealthPulse:")
           self.username = input("Enter your username: ")
           self.password = input("Enter your password: ")
           return self.validate_credentials(self.username, self.password)
-
+  
       def validate_credentials(self, username, password):
           try:
               with open("credentials.txt", "r") as credentials_file:
@@ -111,7 +99,7 @@ class HealthPulse:
                           return True
           except FileNotFoundError:
               return False
-
+  
     
       def load_user_data(self):
           try:
@@ -121,34 +109,58 @@ class HealthPulse:
                       self.dailyCaloriesBurned, self.netCalorieIntake = map(float, in_file.readline().split())
                   self.bmiCategory = in_file.readline().strip()
                   self.workedOut = bool(int(in_file.readline().strip()))
-
+  
                   diet_plan_size = int(in_file.readline().strip())
                   self.dietPlan = [in_file.readline().strip() for _ in range(diet_plan_size)]
-
+  
                   workout_plan_size = int(in_file.readline().strip())
                   self.workoutPlan = [in_file.readline().strip() for _ in range(workout_plan_size)]
-
+  
           except FileNotFoundError:
               print("No saved user data found. Starting fresh.")
-
+  
       def welcome_message(self):
         print("Welcome to HealthPulse!")
         print("Embark on a journey to better health and well-being.")
         print("Let's get started on your personalized health and fitness plan.")
         self.name = input("Please enter your name: ")
-
+  
       def suggest_water_intake(self):
         if self.bmiCategory is None:
             print("Calculate BMI first to get accurate water intake suggestions.")
             return
-
+  
         weight_kg = float(input("Enter your body weight in kilograms: "))
         daily_water_intake = round(weight_kg * 0.03, 2)
-
+  
         print("\nHydration Recommendation:")
         print("Drink at least {} liters of water daily.".format(daily_water_intake))
-
-class DietPlanBeginnerIntermediate:
+  
+    #Weekly recreation activity suggester 
+      def suggest_weekly_activities(self):
+        print("\nWeekly Recreational Workout Suggestions:")
+        for day, activities in self.weekly_activities.items():
+          activity = random.choice(activities)
+          duration = random.randint(30, 60)  # Random duration between 30 to 60 minutes
+          intensity = random.choice(['Low', 'Moderate', 'High'])
+          calories_burned = self.calculate_calories_burned(intensity, duration)
+  
+          print(f"{day}: {activity}")
+          print(f"   Duration: {duration} minutes")
+          print(f"   Intensity: {intensity}")
+          print(f"   Estimated Calories Burned: {calories_burned} kcal")
+          break  # To suggest only one activity per week
+  
+      def calculate_calories_burned(self, intensity, duration):
+      # Placeholder function for estimating calories burned based on intensity and duration
+        intensity_multiplier = {'Low': 3, 'Moderate': 5, 'High': 8}
+        return intensity_multiplier[intensity] * duration
+  
+  
+  class dietPlan_Beginner_Intermediate(HealthPulse):  
+      def _init_(self):
+        super()._init_()
+        
       def choose_fitness_level(self):
         Attempt=0
         while Attempt<3:
@@ -156,15 +168,15 @@ class DietPlanBeginnerIntermediate:
           print("1. Beginner")
           print("2. Intermediate")
           print("3. Advanced")
-
+  
           choice = input("Enter the number corresponding to your fitness level: ")
-
+  
           if choice == "1":
               self.fitness_level = "beginner"
               print("Cheers to new beginnings!You're officially a fitness explorer. Let's start this adventure together!")
               self.suggest_diet_plan()
               break
-
+  
           elif choice == "2":
               self.fitness_level = "intermediate"
               print(" Your dedication is paying off, and the best is yet to come.") 
@@ -175,24 +187,24 @@ class DietPlanBeginnerIntermediate:
               print("You're an advanced fitness warrior now! Your commitment is inspiring. Get ready to take your fitness game to the next level!")
               self.suggest_diet_plan()
               break
-
+  
           else:
               print("Invalid choice. Please choose a valid option.")
               Attempt+=1
-
+  
         if Attempt==3:
           print("You have exceeded the maximum number of attempts. Kindly choose from the given options.")
           self.choose_fitness_level()
-
+  
       def calculate_bmi(self):
           # BMI formula: weight (kg) / (height (m))^2
           print("\nLet's calculate your Body Mass Index (BMI).")
-
+  
           self.height=float(input("Enter your height in meters: "))
           self.BodyWeight=float(input("Enter your weight in kilograms: "))
-
+  
           bmi = self.BodyWeight / (self.height ** 2)
-
+  
           if bmi < 18.5:
               self.bmiCategory = "Underweight"
           elif 18.5 <= bmi < 25:
@@ -201,46 +213,44 @@ class DietPlanBeginnerIntermediate:
               self.bmiCategory = "Overweight"
           else:
               self.bmiCategory = "Obese"
-
+  
           print("\nBody Mass Index (BMI) Calculation:")
           print("BMI: {:.2f}".format(bmi))
           print("Category: {}".format(self.bmiCategory))
-
+  
       def suggest_diet_plan(self):
-          print("\nDiet Plan Suggestions based on BMI: Please note that these are just examples, and actual dietary recommendations should be personalized and consulted with a healthcare professional or a nutritionist.")
-
-          if self.bmi_category == "Underweight":
-              self.suggest_underweight_diet_plan()
-          elif self.bmi_category == "Normal weight":
-              self.suggest_normal_weight_diet_plan()
-          elif self.bmi_category == "Overweight":
-              self.suggest_overweight_diet_plan()
-          else:
-              self.suggest_obese_diet_plan()
-
-
+        print("\nDiet Plan Suggestions based on BMI: Please note that these are just examples, and actual dietary recommendations should be personalized and consulted with a healthcare professional or a nutritionist.")
+        if self.bmiCategory == "Underweight":
+            self.suggest_underweight_diet_plan()
+        elif self.bmiCategory == "Normal weight":
+            self.suggest_normal_weight_diet_plan()
+        elif self.bmiCategory == "Overweight":
+            self.suggest_overweight_diet_plan()
+        else:
+            self.suggest_obese_diet_plan()
+  
       def suggest_underweight_diet_plan(self):
         print("You are underweight.😊 Let's work on adding some healthy goodness to your diet to help you soar to new heights! 🚀 Here's a suggested diet plan:")
         self.Underweight_diet_plan_preference()
-
+  
       def suggest_normal_weight_diet_plan(self):
         print("You are in the normal weight range.😊 Let's work on adding some healthy goodness to your diet to help you soar to new heights! 🚀 Here's a suggested diet plan:")
         self.normal_weight_diet2()
-
+  
       def suggest_overweight_diet_plan(self):
         print("You are overweight.😊 Let's work on adding some healthy goodness to your diet to help you soar to new heights! 🚀 Here's a suggested diet plan:")
         self.over_weight_diet3()
-
+  
       def suggest_obese_diet_plan(self):
         print("Kindly consult to a healthcare professional for a personalized diet plan.")
-
-
+  
+  
       def Underweight_diet_plan_preference(self):
         print("Choose your diet plan category:")
         print("1. Vegan")
         print("2. Vegetarian")
         print("3. Non-Vegetarian")
-
+  
         def vegan_diet_plan1(self):
           print("\nVegan Diet Plan:")
           def suggest_vegan_food_items1(self):
@@ -249,23 +259,23 @@ class DietPlanBeginnerIntermediate:
               print("- Smoothie Bowls with Almond Milk and Fruits")
               print("- Avocado Avocado Toast with Nut Butter and Greek Yogurt")
               print("- Granola with Honey and Berries")
-
+  
             elif self=="Lunch":
               print("Vegan Lunch Recipes:")
               print("- Quinoa Salad with Roasted Vegetables and Tofu")
               print("- Vegetable Stir-Fry with Brown Rice")
               print("- Grilled Chicken with Quinoa and Vegetables")
-
+  
             elif self=="Dinner":
               print("Vegan Dinner Recipes:")
               print("- Vegetable Curry with Rice and Chickpeas")
               print("- Tofu Stir-Fry with Brown Rice")
               print("- Baked broccoli with Quinoa and Vegetables")
-
+  
           self.suggest_vegan_food_items1("Breakfast")
           self.suggest_vegan_food_items1("Lunch")
           self.suggest_vegan_food_items1("Dinner")
-
+  
         def vegetarian_diet_plan1(self):
           print("\nVegetarian Diet Plan:")
           def suggest_vegetarian_food_items1(self):
@@ -275,7 +285,7 @@ class DietPlanBeginnerIntermediate:
               print("Coconut Almond Chia Pudding")
               print("Spinach and Feta Wrap")
               print("Potato and Spinach Hash")
-
+  
             elif self=="Lunch":
               print("Quinoa and Black Bean Bowl")
               print("Chickpea and Vegetable Stir-Fry: A Healthy Alternative to Rice")
@@ -283,7 +293,7 @@ class DietPlanBeginnerIntermediate:
               print("Mushroom and Spinach Quesadilla")
               print("Veggie and Hummus Wrap")
               print("Pasta with Pesto and Cherry Tomatoes")
-
+  
             elif self=="Dinner":
               print("Stuffed Bell Peppers")
               print("Chickpea and Vegetable Curry")
@@ -291,14 +301,14 @@ class DietPlanBeginnerIntermediate:
               print("Vegetarian Burrito Bowl")
               print("Eggplant Parmesan")
               print("Spinach and Feta Stuffed Mushrooms")
-
+  
           self.suggest_vegetarian_food_items("Breakfast")
           self.suggest_vegetarian_items("Lunch")
           self.suggest_vegetarian_items("Dinner")
-
+  
         def non_vegetarian_diet_plan1(self):
           print("\nNon-Vegetarian Diet Plan:")
-
+  
           def suggest_non_vegetarian_items1(self):
             if self=="Breakfast":
               print("Classic Bacon and Eggs")
@@ -306,27 +316,27 @@ class DietPlanBeginnerIntermediate:
               print("Sausage and Mushroom Omelette")
               print("Chicken and Avocado Breakfast Wrap")
               print("Ham and Cheese Croissant Sandwich")
-
+  
             elif self=="Lunch":
               print("Grilled Chicken Caesar Salad")
               print("Salmon and Quinoa Bowl")
               print("Beef Stir-Fry with Brown Rice")
               print("Turkey and Avocado Wrap")
               print("Shrimp and Pasta Alfredo")
-
+  
             elif self=="Dinner":
               print("Grilled Chicken and Vegetables")
               print("Beef and Vegetable Stir-Fry")
               print("Shrimp and Vegetable Curry")
               print("Beef and Quinoa Stir-Fry")
               print("Chicken and Vegetable Stir-Fry")
-
+  
           self.suggest_non_vegetarian_items1("Breakfast")
           self.suggest_non_vegetarian_items1("Lunch")
           self.suggest_non_vegetarian_items1("Dinner")
-
+  
         category_choice = input("Enter the number corresponding to your diet plan category:")
-
+  
         if category_choice == "1":
             vegan_diet_plan1(self)
         elif category_choice == "2":
@@ -335,14 +345,15 @@ class DietPlanBeginnerIntermediate:
             non_vegetarian_diet_plan1(self)
         else:
             print("Invalid choice. Please choose a valid option.")
-
-
+            self.Underweight_diet_plan_preference()
+  
+  
       def normal_weight_diet2(self):  
         print("Choose your diet plan category:")
         print("1. Vegan")
         print("2. Vegetarian")
         print("3. Non-Vegetarian")
-
+  
         def vegan_diet_plan2(self):
           print("\nVegan Diet Plan:")
           def suggest_vegan_food_items2(self):
@@ -351,23 +362,23 @@ class DietPlanBeginnerIntermediate:
               print("- Oatmeal with Fruit and Nuts")
               print("- Smoothie Bowl with Almond Milk and Fruits")
               print("- Chia Seed Pudding with Tropical Fruits")
-
+  
             elif self=="Lunch":
               print("Vegan Lunch Recipes:")
               print("- Chickpea and Spinach Coconut Curry")
               print("- Vegan Mediterranean Wrap")
               print("- Vegan Pasta Primavera")
-
+  
             elif self=="Dinner":
               print("Vegan Dinner Recipes:")
               print("- Vegan Lentil and Vegetable Curry")
               print("- Stuffed Bell Peppers with Quinoa and Black Beans")
               print("- Vegan Cauliflower Alfredo Pasta")
-
+  
           self.suggest_vegan_food_items2("Breakfast")
           self.suggest_vegan_food_items2("Lunch")
           self.suggest_vegan_food_items2("Dinner")
-
+  
         def vegetarian_diet_plan2(self):
           print("\nVegetarian Diet Plan:")
           def suggest_vegetarian_food_items2(self):
@@ -377,7 +388,7 @@ class DietPlanBeginnerIntermediate:
               print("Whole Grain Toast with Butter and Banana Slices")
               print("Sweet Potato and Black Bean Breakfast Hash")
               print("Veggie and Cheese Bagel Sandwich")
-
+  
             elif self=="Lunch":
               print("Quinoa Salad with Chickpeas and Avocado")
               print("Mushroom and Spinach Stuffed Bell Peppers")
@@ -385,7 +396,7 @@ class DietPlanBeginnerIntermediate:
               print("Vegetarian Tacos with Black Beans and Corn Salsa")
               print("Vegetable Biryani")
               print("Palak Paneer with Rice and Lentils:")
-
+  
             elif self=="Dinner":
               print("Eggplant Parmesan")
               print("Mushroom and Spinach Lasagna")
@@ -393,14 +404,14 @@ class DietPlanBeginnerIntermediate:
               print("Sweet Potato and Black Bean Enchiladas")
               print("Vegetarian Lentil Soup")
               print("Spinach and Feta Stuffed Portobello Mushrooms")
-
+  
           self.suggest_vegetarian_food_items2("Breakfast")
           self.suggest_vegetarian_items2("Lunch")
           self.suggest_vegetarian_items2("Dinner")
-
+  
         def non_vegetarian_diet_plan2(self):
           print("\nNon-Vegetarian Diet Plan:")
-
+  
           def suggest_non_vegetarian_items2(self):
             if self=="Breakfast":
               print("Egg and Veggie Scramble")
@@ -415,20 +426,20 @@ class DietPlanBeginnerIntermediate:
               print("Beef Stir-Fry with Brown Rice")
               print("Turkey and Avocado Wrap")
               print("Shrimp and Pasta Alfredo")
-
+  
             elif self=="Dinner":
               print("Grilled Chicken and Vegetables")
               print("Beef and Vegetable Stir-Fry")
               print("Shrimp and Vegetable Curry")
               print("Beef and Quinoa Stir-Fry")
               print("Chicken and Vegetable Stir-Fry")
-
+  
           self.suggest_non_vegetarian_items2("Breakfast")
           self.suggest_non_vegetarian_items2("Lunch")
           self.suggest_non_vegetarian_items2("Dinner")
-
+  
         category_choice = input("Enter the number corresponding to your diet plan category:")
-
+  
         if category_choice == "1":
             vegan_diet_plan2(self)
         elif category_choice == "2":
@@ -437,14 +448,14 @@ class DietPlanBeginnerIntermediate:
             non_vegetarian_diet_plan2(self)
         else:
             print("Invalid choice. Please choose a valid option.")
-
-
+  
+  
       def over_weight_diet3(self):
         print("Choose your diet plan category:")
         print("1. Vegan")
         print("2. Vegetarian")
         print("3. Non-Vegetarian")
-
+  
         def vegan_diet_plan3(self):
           print("\nVegan Diet Plan:")
           def suggest_vegan_food_items3(self):
@@ -453,23 +464,23 @@ class DietPlanBeginnerIntermediate:
               print("- Smoothie Bowls with Almond Milk and Fruits")
               print("- Avocado Avocado Toast with Nut Butter and Greek Yogurt")
               print("- Granola with Honey and Berries")
-
+  
             elif self=="Lunch":
               print("Vegan Lunch Recipes:")
               print("- Quinoa Salad with Roasted Vegetables and Tofu")
               print("- Vegetable Stir-Fry with Brown Rice")
               print("- Grilled Chicken with Quinoa and Vegetables")
-
+  
             elif self=="Dinner":
               print("Vegan Dinner Recipes:")
               print("- Vegetable Curry with Rice and Chickpeas")
               print("- Tofu Stir-Fry with Brown Rice")
               print("- Baked broccoli with Quinoa and Vegetables")
-
+  
           self.suggest_vegan_food_items3("Breakfast")
           self.suggest_vegan_food_items3("Lunch")
           self.suggest_vegan_food_items3("Dinner")
-
+  
         def vegetarian_diet_plan3(self):
           print("\nVegetarian Diet Plan:")
           def suggest_vegetarian_food_items3(self):
@@ -479,7 +490,7 @@ class DietPlanBeginnerIntermediate:
               print("Coconut Almond Chia Pudding")
               print("Spinach and Feta Wrap")
               print("Potato and Spinach Hash")
-
+  
             elif self=="Lunch":
               print("Quinoa and Black Bean Bowl")
               print("Chickpea and Vegetable Stir-Fry: A Healthy Alternative to Rice")
@@ -487,7 +498,7 @@ class DietPlanBeginnerIntermediate:
               print("Mushroom and Spinach Quesadilla")
               print("Veggie and Hummus Wrap")
               print("Pasta with Pesto and Cherry Tomatoes")
-
+  
             elif self=="Dinner":
               print("Stuffed Bell Peppers")
               print("Chickpea and Vegetable Curry")
@@ -495,14 +506,14 @@ class DietPlanBeginnerIntermediate:
               print("Vegetarian Burrito Bowl")
               print("Eggplant Parmesan")
               print("Spinach and Feta Stuffed Mushrooms")
-
+  
           self.suggest_vegetarian_food_items3("Breakfast")
           self.suggest_vegetarian_items3("Lunch")
           self.suggest_vegetarian_items3("Dinner")
-
+  
         def non_vegetarian_diet_plan3(self):
           print("\nNon-Vegetarian Diet Plan:")
-
+  
           def suggest_non_vegetarian_items3(self):
             if self=="Breakfast":
               print("Classic Bacon and Eggs")
@@ -510,27 +521,27 @@ class DietPlanBeginnerIntermediate:
               print("Sausage and Mushroom Omelette")
               print("Chicken and Avocado Breakfast Wrap")
               print("Ham and Cheese Croissant Sandwich")
-
+  
             elif self=="Lunch":
               print("Grilled Chicken Caesar Salad")
               print("Salmon and Quinoa Bowl")
               print("Beef Stir-Fry with Brown Rice")
               print("Turkey and Avocado Wrap")
               print("Shrimp and Pasta Alfredo")
-
+  
             elif self=="Dinner":
               print("Grilled Chicken and Vegetables")
               print("Beef and Vegetable Stir-Fry")
               print("Shrimp and Vegetable Curry")
               print("Beef and Quinoa Stir-Fry")
               print("Chicken and Vegetable Stir-Fry")
-
+  
           self.suggest_non_vegetarian_items3("Breakfast")
           self.suggest_non_vegetarian_items3("Lunch")
           self.suggest_non_vegetarian_items3("Dinner")
-
+  
         category_choice = input("Enter the number corresponding to your diet plan category:")
-
+  
         if category_choice == "1":
             vegan_diet_plan3(self)
         elif category_choice == "2":
@@ -539,179 +550,135 @@ class DietPlanBeginnerIntermediate:
             non_vegetarian_diet_plan3(self)
         else:
             print("Invalid choice. Please choose a valid option.") 
-
-
+  
+  
       def suggest_water_intake(self):
         if self.bmiCategory is None:
             print("Calculate BMI first to get accurate water intake suggestions.")
             return
-
+  
         weight_kg = float(input("Enter your body weight in kilograms: "))
         daily_water_intake = round(weight_kg * 0.03, 2)
-
+  
         print("\nHydration Recommendation:")
         print("Drink at least {} liters of water daily.".format(daily_water_intake))
-
+  
       def choose_allergies(self):
         allergies = ["Dairy", "Gluten", "Nuts", "Soy", "Eggs"]
-
+  
         print("\nChoose your allergies (Enter numbers separated by commas):")
         for i, allergy in enumerate(allergies, 1):
             print(f"{i}. {allergy}")
-
+  
         selected_allergies = input("Enter the numbers corresponding to your allergies: ").split(',')
         selected_allergies = [allergies[int(index) - 1] for index in selected_allergies]
-
+  
         print("\nSelected Allergies:", ', '.join(selected_allergies))
         self.suggest_allergy_specific_diet(selected_allergies)
-
+  
       def suggest_allergy_specific_diet(self, selected_allergies):
         print("\nDiet Plan Suggestions based on Allergies:")
-
+  
+        # Example diet suggestions based on allergies
         if "Dairy" in selected_allergies:
             print("Avoid dairy products. Consider alternatives like almond or soy milk.")
-
+  
         elif "Gluten" in selected_allergies:
             print("Opt for gluten-free grains like rice, quinoa, and oats.")
-
+  
         elif "Nuts" in selected_allergies:
             print("Avoid nuts. Consider alternatives like almonds or peanuts.")
-
+  
         elif "Soy" in selected_allergies:
             print("Avoid soy products. Consider alternatives like almond or soy milk.")
-
-
-    
-
-      def log_food_intake(self):
-          print("\nFood Log:")
-          food_item = input("Enter the name of the food item you consumed: ")
-
-          if food_item in self.foodCalories:
-              serving_size = float(input(f"Enter the serving size in grams for {food_item}: "))
-              calories_consumed = (serving_size / 100.0) * self.foodCalories[food_item]
-              self.netCalorieIntake += calories_consumed
-              print(f"You consumed {calories_consumed:.2f} calories from {food_item}.")
-          else:
-              print(f"Sorry, we don't have caloric information for {food_item}.")
-
-      def log_exercise(self):
-          print("\nExercise Log:")
-          exercise_type = input("Enter the type of exercise you performed: ")
-          exercise_duration = float(input("Enter the duration of the exercise in minutes: "))
-
-          calories_burned = self.calculate_calories_burned(exercise_type, exercise_duration)
-          self.netCalorieIntake -= calories_burned
-
-          print(f"You burned {calories_burned:.2f} calories with {exercise_type}.")
-
-      def calculate_calories_burned(self, exercise_type, exercise_duration):
-          calories_burned_per_minute = {
-              "Running": 11.4,
-              "Cycling": 6.0,
-              "Swimming": 7.6,
-              "Jump Rope": 12.0,
-              "Yoga": 2.5,
-              "Weightlifting": 3.0,
-              "HIIT": 8.0
-          }
-
-          if exercise_type in calories_burned_per_minute:
-              return exercise_duration * (calories_burned_per_minute[exercise_type] / 30.0)
-          else:
-              print(f"Sorry, we don't have caloric information for {exercise_type}.")
-              return 0.0
-
-
-      def view_diet_plan(self):
-          print("\nDiet Plan:")
-          for plan in self.dietPlan:
-              print(plan)
-
-      def view_workout_plan(self):
-          print("\nWorkout Plan:")
-          for plan in self.workoutPlan:
-              print(plan)
-      def talk_to_chatgpt(self, user_input):
-          openai.api_key = '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'  # Replace with your OpenAI API key
-
-          prompt = f"HealthPulse User: {user_input}\n"
-          response = openai.Completion.create(
-              engine="gpt-3.5-turbo-1106", 
-              prompt=prompt,
-              max_tokens=150
-          )
-
-          chatgpt_reply = response.choices[0].text.strip()
-          print("ChatGPT:", chatgpt_reply)
-
-      def handle_user_input(self, user_input):
-          if user_input.lower() == 'talk to chatgpt':
-              user_query = input("You: ")
-              self.talk_to_chatgpt(user_query)
-          else:
-              print("Invalid command. Please enter a valid command or 'talk to ChatGPT'.")
-
-      def main_interaction_loop(self):
-          print("\nWelcome to HealthPulse!")
-
-          while True:
-              print("1. Sign In")
-              print("2. Sign Up")
-              print("3. Talk to ChatGPT")
-              print("4. Exit")
-
-              try:
-                  choice = int(input("Enter your choice (1-4): "))
-
-                  if choice == 1:
-                      login_attempt = 0
-                      while login_attempt < 3:
-                          if self.login():
-                              break
-                          else:
-                              print("Invalid username or password. Please try again.")
-                              login_attempt += 1
-
-                      if login_attempt == 3:
-                          print("Too many login attempts. Returning to the main menu.")
-                      else:
-                          self.load_user_data()
-
-                          if not self.name:
-                              print("User not found. Please sign up.")
-                          else:
-                              print(f"\nWelcome back, {self.name}!")
-                              break
-
-                  elif choice == 2:
-                      self.welcome_message()
-                      self.register_user()
-                      self.load_user_data()
-                      print(f"\nWelcome, {self.name}!")
-                      break
-
-                  elif choice == 3:
-                      self.handle_user_input('talk to chatgpt')
-
-                  elif choice == 4:
-                      print("Exiting HealthPulse.")
-                      return
-
-                  else:
-                      print("Invalid choice. Please enter a number between 1 and 4.")
-
-              except ValueError:
-                  print("Invalid input. Please enter a number.")
-                  continue
-
-          while True:
-              user_input = input("\nYou: ")
-              if user_input.lower() == 'talk to chatgpt':
-                  self.handle_user_input('talk to chatgpt')
-              else:
-                  print("HealthPulse: I'm sorry, I didn't understand that.")
-
-if __name__ == "__main__":
+  
+        # elif "Eggs" in selected_allergies:
+        #     print("Avoid eggs. Consider alternatives like chicken or tofu.")
+           
+  class dietPlan_Advance(dietPlan_Beginner_Intermediate):
+    def _init_(self):
+     super()._init_() 
+  
+  
+  
+  
+  def main():
       health_pulse = HealthPulse()
-      health_pulse.main_interaction_loop()
+      dietplan_beginner_intermediate = dietPlan_Beginner_Intermediate()
+      
+      print("\nWelcome to HealthPulse!")
+  
+      while True:
+          print("1. Sign In")
+          print("2. Sign Up")
+          print("3. Exit")
+  
+          try:
+              choice = int(input("Enter your choice (1-3): "))
+  
+              if choice == 1:
+                  # Sign In
+                  login_attempt = 0
+                  while login_attempt < 3:
+                      if health_pulse.login():
+                          break
+                      else:
+                          print("Invalid username or password. Please try again.")
+                          login_attempt += 1
+  
+                  if login_attempt == 3:
+                      print("Too many login attempts. Returning to the main menu.")
+                  else:
+                      health_pulse.load_user_data()
+  
+                      if not health_pulse.name:
+                          print("User not found. Please sign up.")
+                      else:
+                          print(f"\nWelcome back, {health_pulse.name}!")
+                          break  # Exit the loop and proceed to the main menu
+  
+              elif choice == 2:
+                  # Sign Up
+                  health_pulse.welcome_message()
+                  health_pulse.register_user()
+                  health_pulse.load_user_data()
+                  print(f"\nWelcome, {health_pulse.name}!")
+                  break  # Exit the loop and proceed to the main menu
+  
+              elif choice == 3:
+                  print("Exiting HealthPulse.")
+                  return
+  
+              else:
+                  print("Invalid choice. Please enter a number between 1 and 3.")
+  
+          except ValueError:
+              print("Invalid input. Please enter a number.")
+  
+      dietplan_beginner_intermediate.choose_fitness_level()
+      dietplan_beginner_intermediate.calculate_bmi()
+      dietplan_beginner_intermediate.suggest_diet_plan()
+      health_pulse.suggest_water_intake()
+      dietplan_beginner_intermediate.choose_allergies()
+      health_pulse.suggest_weekly_activities()
+  
+      print("\nChat with GPT:")
+      chat_prompt = input("You: ")
+  
+      while chat_prompt.lower() != "exit":
+          # Add the user's input to the GPT prompt
+          gpt_input = f"User: {chat_prompt}\nAI:"
+  
+          # Get GPT's response
+          gpt_response = health_pulse.chat_with_gpt(gpt_input)
+  
+          # Print GPT's response
+          print(f"GPT: {gpt_response}")
+  
+          # Get the next user input
+          chat_prompt = input("You: ")
+  
+      print("Exiting HealthPulse.")
+  
+  if __name__ == "__main__":
+      main()
